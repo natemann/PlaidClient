@@ -10,79 +10,13 @@ import Foundation
 import Alamofire
 
 let plaidBaseURL = "https://tartan.plaid.com"
-let clientID     = "clientID"
-let secret       = "secret"
-
-struct PlaidInstitution {
-    let credentials: [String : String]
-    let has_mfa:     Bool
-    let id:          String
-    let name:        String
-    let type:        String
-    let mfa:         [String]
-    let products:    [String]
-    
-    init(institution: [String : AnyObject]) {
-        credentials = institution["credentials"]! as [String : String]
-        has_mfa     = institution["has_mfa"]! as Int == 1 ? true : false
-        id          = institution["id"]! as String
-        name        = institution["name"]! as String
-        type        = institution["type"]! as String
-        mfa         = institution["mfa"]! as [String]
-        products    = institution["products"]! as [String]
-    }
-}
-
-
-struct PlaidAccount {
-    
-    let name    = String()
-    let number  = String()
-    let id      = String()
-    let balance = NSDecimalNumber()
-    let type    = String()
-    
-    init(account: [String : AnyObject]) {
-        let meta           = account["meta"]! as [String: AnyObject]
-        let accountBalance = account["balance"]! as [String: Double]
-        
-        name    = meta["name"]! as String
-        number  = meta["number"]! as String
-        id      = account["_id"]! as String
-        type    = account["tpe"]! as String
-        balance = NSDecimalNumber(double: accountBalance["current"]! as Double)
-    }
-}
-
-
-struct PlaidTransaction {
-    
-    let account:   String
-    let id:        String
-    let pendingID: String?
-    let amount:    NSDecimalNumber
-    let date:      NSDate
-    let pending:   Bool
-    
-    init(transaction: [String : AnyObject]) {
-        account   = transaction["_account"]! as String
-        id        = transaction["_id"]! as String
-        pendingID = transaction["_pendingTransaction"] as? String
-        amount    = NSDecimalNumber.roundTwoDecimalPlaces(double: transaction["amount"]! as Double * -1)  //Plaid stores withdraws as positve numbers and deposits as negative numbers
-        date      = NSDateFormatter.dateFromString(transaction["date"]! as String)
-        pending   = transaction["pending"]! as Bool
-        
-    }
-}
-
 
 class PlaidSwiftClient {
 
     //    MARK: Class Functions
     
     class func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution], error: NSError?) -> ()) {
-        Alamofire.request(.GET, "https://tartan.plaid.com/institutions")
-                 .responseJSON {(request, response, data, error) -> Void in
+        Alamofire.request(.GET, "https://tartan.plaid.com/institutions").responseJSON {(request, response, data, error) -> Void in
             var plaidInstitutions = [PlaidInstitution]()
             for institution in data as [AnyObject] {
                 if let institution = institution as? [String: AnyObject] {
@@ -105,14 +39,13 @@ class PlaidSwiftClient {
                            "password" : password,
                                 "pin" : pin]
         
-        let parameters: [String: AnyObject] = ["client_id" : clientID,
-                                                  "secret" : secret,
+        let parameters: [String: AnyObject] = ["client_id" : clientIDToken,
+                                                  "secret" : secretToken,
                                              "credentials" : credentials,
                                                     "type" : institution.type,
                                                    "email" : email]
         
-        Alamofire.request(.POST, plaidBaseURL + "/connect", parameters: parameters, encoding: .JSON)
-                 .responseJSON { (request, response, data, error) -> Void in
+        Alamofire.request(.POST, plaidBaseURL + "/connect", parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) -> Void in
             let responseObject = data! as [String: AnyObject]
             completionHandler(response: response!, responseData: responseObject)
         }
@@ -124,14 +57,13 @@ class PlaidSwiftClient {
                               accessToken: String,
                         completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
                             
-        let parameters: [String: AnyObject] = ["client_id" : clientID,
-                                                  "secret" : secret,
+        let parameters: [String: AnyObject] = ["client_id" : clientIDToken,
+                                                  "secret" : secretToken,
                                                      "mfa" : response,
                                             "access_token" : accessToken,
                                                     "type" : institution.type]
                             
-        Alamofire.request(.POST, plaidBaseURL + "/connect/step", parameters: parameters, encoding: .JSON)
-                 .responseJSON { (request, response, data, error) -> Void in
+        Alamofire.request(.POST, plaidBaseURL + "/connect/step", parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) -> Void in
             if let responseObject = data as? [String: AnyObject] {
                 completionHandler(response: response!, responseData: responseObject)
             }
@@ -145,6 +77,7 @@ class PlaidSwiftClient {
                                         fromDate: NSDate?,
                                           toDate: NSDate?,
                                          success: (response: NSHTTPURLResponse, plaidTransactions: [PlaidTransaction]) -> ()) {
+                                            println("1")
         var options: [String: AnyObject] = ["pending" : pending,
                                             "account" : account]
         if let fromDate = fromDate {
@@ -155,22 +88,16 @@ class PlaidSwiftClient {
             options["lte"] = NSDateFormatter.plaidDate(date: toDate)
         }
         
-        let downloadCredentials: [String: AnyObject] = ["client_id" : clientID,
-                                                           "secret" : secret,
+        let downloadCredentials: [String: AnyObject] = ["client_id" : clientIDToken,
+                                                           "secret" : secretToken,
                                                      "access_token" : accessToken,
                                                           "options" : options]
-        
         Alamofire.request(.GET, plaidBaseURL + "/connect", parameters: downloadCredentials)
                  .responseJSON { (request, response, data, error) -> Void in
             if let downloadData = data as? [String: AnyObject] {
                 if let transactions = downloadData["transactions"] as? [[String: AnyObject]] {
                     var plaidTransactions = [PlaidTransaction]()
                     for transaction in transactions {
-                        println(transaction["_id"]! as String)
-                        var hexNumber: CUnsignedInt = 0
-                        let scanner = NSScanner(string: transaction["_id"]! as String)
-                        scanner.scanHexInt(&hexNumber)
-                        println(hexNumber)
                         let plaidTransaction = PlaidTransaction(transaction: transaction)
                         plaidTransactions.append(plaidTransaction)
                     }
