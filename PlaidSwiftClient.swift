@@ -114,11 +114,11 @@ extension NSDecimalNumber {
     
     class func roundTwoDecimalPlaces(#double: Double) -> NSDecimalNumber {
         let handler = NSDecimalNumberHandler(roundingMode: .RoundPlain,
-            scale: 2,
-            raiseOnExactness: true,
-            raiseOnOverflow: true,
-            raiseOnUnderflow: true,
-            raiseOnDivideByZero: true)
+                                                    scale: 2,
+                                         raiseOnExactness: true,
+                                          raiseOnOverflow: true,
+                                         raiseOnUnderflow: true,
+                                      raiseOnDivideByZero: true)
         let number  = NSDecimalNumber(double: double)
         
         return number.decimalNumberByRoundingAccordingToBehavior(handler)
@@ -143,7 +143,7 @@ extension NSDateFormatter {
     class func dateFromString(string: String) -> NSDate {
         let dateFormatter = NSDateFormatter()
         
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_PSIX")
+        dateFormatter.locale     = NSLocale(localeIdentifier: "en_US_PSIX")
         dateFormatter.dateFormat = "yyy-MM-dd"
         
         return dateFormatter.dateFromString(string)!
