@@ -51,6 +51,7 @@ struct PlaidAccount {
 
 struct PlaidTransaction {
     
+    let name:      String
     let account:   String
     let id:        String
     let pendingID: String?
@@ -59,6 +60,7 @@ struct PlaidTransaction {
     let pending:   Bool
     
     init(transaction: [String : AnyObject]) {
+        name      = transaction["name"]! as String
         account   = transaction["_account"]! as String
         id        = transaction["_id"]! as String
         pendingID = transaction["_pendingTransaction"] as? String
