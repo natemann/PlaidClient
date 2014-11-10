@@ -17,14 +17,12 @@ class PlaidSwiftClient {
     
     class func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution], error: NSError?) -> ()) {
         Alamofire.request(.GET, "https://tartan.plaid.com/institutions").responseJSON {(request, response, data, error) -> Void in
-            var plaidInstitutions = [PlaidInstitution]()
-            for institution in data as [AnyObject] {
-                if let institution = institution as? [String: AnyObject] {
-                    let plaidInstitution = PlaidInstitution(institution: institution)
-                    plaidInstitutions.append(plaidInstitution)
+            if let institutions = data as? [[String : AnyObject]] {
+                let plaidInstitutions = institutions.map { institution in
+                    PlaidInstitution(institution: institution)
                 }
+                completionHandler(response: response, institutions: plaidInstitutions, error: error)
             }
-            completionHandler(response: response, institutions: plaidInstitutions, error: error)
         }
     }
     
@@ -92,8 +90,8 @@ class PlaidSwiftClient {
                                                            "secret" : secretToken,
                                                      "access_token" : accessToken,
                                                           "options" : options]
-        Alamofire.request(.GET, plaidBaseURL + "/connect", parameters: downloadCredentials)
-                 .responseJSON { (request, response, data, error) -> Void in
+                                            
+        Alamofire.request(.GET, plaidBaseURL + "/connect", parameters: downloadCredentials).responseJSON { (request, response, data, error) -> Void in
             if let downloadData = data as? [String: AnyObject] {
                 if let transactions = downloadData["transactions"] as? [[String: AnyObject]] {
                     var plaidTransactions = [PlaidTransaction]()

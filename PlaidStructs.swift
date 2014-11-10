@@ -73,12 +73,6 @@ struct PlaidTransaction {
 
     
     init(transaction: [String : AnyObject]) {
-        let meta        = transaction["meta"] as [String : AnyObject]
-        let location    = meta["location"] as [String : AnyObject]
-        let coordinates = location["coordinates"] as? [String : AnyObject]
-        let ids         = meta["ids"] as? [String : AnyObject]
-        let contact     = meta["contact"] as? [String : AnyObject]
-        
         
         name       = transaction["name"]! as String
         account    = transaction["_account"]! as String
@@ -87,16 +81,30 @@ struct PlaidTransaction {
         amount     = NSDecimalNumber.roundTwoDecimalPlaces(double: transaction["amount"]! as Double * -1)  //Plaid stores withdraws as positves and deposits as negatives
         date       = NSDateFormatter.dateFromString(transaction["date"]! as String)
         pending    = transaction["pending"]! as Bool
-        address    = location["address"] as? String
-        city       = location["city"] as? String
-        state      = location["state"] as? String
         type       = transaction["type"]! as [String : String]
         categoryID = transaction["category_id"]! as String
-        telephone  = contact?["telephone"] as? String
-        latitude   = coordinates?["lat"] as? String
-        longitude  = coordinates?["lng"] as? String
-        factual    = ids?["factual"] as? String
-        fourSquare = ids?["foursquare"] as? String
+        
+        if let meta = transaction["meta"] as? [String : AnyObject] {
+            if let location = meta["location"] as? [String : AnyObject] {
+                address    = location["address"] as? String
+                city       = location["city"] as? String
+                state      = location["state"] as? String
+                zip        = location["zip"] as? String
+                
+                if let coordinates = location["coordinates"] as? [String : String] {
+                    latitude   = coordinates["lat"]
+                    longitude  = coordinates["lng"]
+                }
+            }
+            if let contact = meta["contact"] as? [String : String] {
+                telephone = contact["telephone"]
+            }
+            
+            if let ids = meta["ids"] as? [String : String] {
+                factual    = ids["factual"]
+                fourSquare = ids["foursquare"]
+            }
+        }
     }
 }
 
