@@ -8,7 +8,18 @@
 
 import Foundation
 
+struct PlaidURL {
+    
+    static var baseURL = "https://tartan.plaid.com"
+    
+    static var institutions: String { return baseURL + "/institutions" }
+    static var connect:      String { return baseURL + "/connect" }
+    static var step:         String { return connect + "/step" }
+}
+
+
 struct PlaidInstitution {
+    
     let credentials: [String : String]
     let has_mfa:     Bool
     let id:          String
@@ -27,6 +38,7 @@ struct PlaidInstitution {
         products    = institution["products"]! as [String]
     }
 }
+
 
 struct PlaidAccount {
     

@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 
+
 let plaidBaseURL = "https://tartan.plaid.com"
 
 class PlaidSwiftClient {
@@ -16,7 +17,7 @@ class PlaidSwiftClient {
     //    MARK: Class Functions
     
     class func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution], error: NSError?) -> ()) {
-        Alamofire.request(.GET, "https://tartan.plaid.com/institutions").responseJSON {(request, response, data, error) in
+        Alamofire.request(.GET, PlaidURL.institutions).responseJSON {(request, response, data, error) in
             if let institutions = data as? [[String : AnyObject]] {
                 let plaidInstitutions = institutions.map { institution in
                     PlaidInstitution(institution: institution)
@@ -43,7 +44,7 @@ class PlaidSwiftClient {
                                                     "type" : institution.type,
                                                    "email" : email]
         
-        Alamofire.request(.POST, plaidBaseURL + "/connect", parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
+        Alamofire.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
             let responseObject = data! as [String: AnyObject]
             completionHandler(response: response!, responseData: responseObject)
         }
@@ -61,7 +62,7 @@ class PlaidSwiftClient {
                                             "access_token" : accessToken,
                                                     "type" : institution.type]
                             
-        Alamofire.request(.POST, plaidBaseURL + "/connect/step", parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
+        Alamofire.request(.POST, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
             if let responseObject = data as? [String: AnyObject] {
                 completionHandler(response: response!, responseData: responseObject)
             }
@@ -91,7 +92,7 @@ class PlaidSwiftClient {
                                                      "access_token" : accessToken,
                                                           "options" : options]
                                             
-        Alamofire.request(.GET, plaidBaseURL + "/connect", parameters: downloadCredentials).responseJSON { (request, response, data, error) in
+        Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
             if let downloadData = data as? [String: AnyObject] {
                 if let transactions = downloadData["transactions"] as? [[String: AnyObject]] {
                     let plaidTransactions = transactions.map { transaction in
@@ -129,20 +130,21 @@ extension NSDecimalNumber {
 
 extension NSDateFormatter {
     
-    class func plaidDate(#date: NSDate) -> String {
+    class var dateFormatter: NSDateFormatter {
         let dateFormatter = NSDateFormatter()
         
         dateFormatter.locale     = NSLocale(localeIdentifier: "en_US_PSIX")
         dateFormatter.dateFormat = "yyy-MM-dd"
+        
+        return dateFormatter
+    }
+    
+    class func plaidDate(#date: NSDate) -> String {
         
         return dateFormatter.stringFromDate(date)
     }
     
     class func dateFromString(string: String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
-        
-        dateFormatter.locale     = NSLocale(localeIdentifier: "en_US_PSIX")
-        dateFormatter.dateFormat = "yyy-MM-dd"
         
         return dateFormatter.dateFromString(string)!
     }
