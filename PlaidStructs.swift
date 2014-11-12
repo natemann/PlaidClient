@@ -70,7 +70,7 @@ struct PlaidTransaction {
     let date:       NSDate
     let pending:    Bool
     let type:       [String : String]
-    let categoryID: String
+    let categoryID: String?
     
     let name:       String
     let address:    String?
@@ -85,6 +85,14 @@ struct PlaidTransaction {
 
     
     init(transaction: [String : AnyObject]) {
+<<<<<<< Updated upstream
+=======
+        let meta        = transaction["meta"] as [String : AnyObject]
+        let location    = meta["location"] as [String : AnyObject]
+        let coordinates = location["coordinates"] as? [String : AnyObject]
+        let ids         = meta["ids"] as? [String : AnyObject]
+        let contact     = meta["contact"] as? [String : AnyObject]
+>>>>>>> Stashed changes
         
         name       = transaction["name"]! as String
         account    = transaction["_account"]! as String
@@ -94,6 +102,7 @@ struct PlaidTransaction {
         date       = NSDateFormatter.dateFromString(transaction["date"]! as String)
         pending    = transaction["pending"]! as Bool
         type       = transaction["type"]! as [String : String]
+<<<<<<< Updated upstream
         categoryID = transaction["category_id"]! as String
         
         if let meta = transaction["meta"] as? [String : AnyObject] {
@@ -117,6 +126,14 @@ struct PlaidTransaction {
                 fourSquare = ids["foursquare"]
             }
         }
+=======
+        categoryID = transaction["category_id"] as? String
+        telephone  = contact?["telephone"] as? String
+        latitude   = coordinates?["lat"] as? String
+        longitude  = coordinates?["lng"] as? String
+        factual    = ids?["factual"] as? String
+        fourSquare = ids?["foursquare"] as? String
+>>>>>>> Stashed changes
     }
 }
 

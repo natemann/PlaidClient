@@ -10,8 +10,6 @@ import Foundation
 import Alamofire
 
 
-let plaidBaseURL = "https://tartan.plaid.com"
-
 class PlaidSwiftClient {
 
     //    MARK: Class Functions
@@ -26,6 +24,7 @@ class PlaidSwiftClient {
             }
         }
     }
+    
     
     
     class func loginToInstitution(institution: PlaidInstitution,
@@ -76,7 +75,6 @@ class PlaidSwiftClient {
                                         fromDate: NSDate?,
                                           toDate: NSDate?,
                                          success: (response: NSHTTPURLResponse, plaidTransactions: [PlaidTransaction]) -> ()) {
-                                            println("1")
         var options: [String: AnyObject] = ["pending" : pending,
                                             "account" : account]
         if let fromDate = fromDate {
