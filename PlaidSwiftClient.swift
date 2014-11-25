@@ -91,13 +91,11 @@ class PlaidSwiftClient {
                                                           "options" : options]
                                             
         Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
-            if let downloadData = data as? [String: AnyObject] {
-                if let transactions = downloadData["transactions"] as? [[String: AnyObject]] {
-                    let plaidTransactions = transactions.map { transaction in
-                        PlaidTransaction(transaction: transaction)
-                    }
-                    success(response: response!, plaidTransactions: plaidTransactions)
+            if let transactions = data?["transactions"] as? [[String: AnyObject]] {
+                let plaidTransactions = transactions.map { transaction in
+                    PlaidTransaction(transaction: transaction)
                 }
+                success(response: response!, plaidTransactions: plaidTransactions)
             }
         }
     }
