@@ -10,11 +10,10 @@ import Foundation
 
 struct PlaidURL {
     
-    static var baseURL = "https://tartan.plaid.com"
-    
-    static var institutions: String { return baseURL + "/institutions" }
-    static var connect:      String { return baseURL + "/connect" }
-    static var step:         String { return connect + "/step" }
+    static let baseURL      = "https://tartan.plaid.com"
+    static let institutions = baseURL + "/institutions"
+    static let connect      = baseURL + "/connect"
+    static let step         = connect + "/step"
 }
 
 
@@ -87,8 +86,8 @@ struct PlaidTransaction {
     init(transaction: [String : AnyObject]) {
 
         let meta        = transaction["meta"] as [String : AnyObject]
-        let location    = meta["location"] as [String : AnyObject]
-        let coordinates = location["coordinates"] as? [String : AnyObject]
+        let location    = meta["location"] as? [String : AnyObject]
+        let coordinates = location?["coordinates"] as? [String : AnyObject]
         let ids         = meta["ids"] as? [String : AnyObject]
         let contact     = meta["contact"] as? [String : AnyObject]
 
@@ -104,10 +103,10 @@ struct PlaidTransaction {
         
         if let meta = transaction["meta"] as? [String : AnyObject] {
             if let location = meta["location"] as? [String : AnyObject] {
-                address    = location["address"] as? String
-                city       = location["city"] as? String
-                state      = location["state"] as? String
-                zip        = location["zip"] as? String
+                address = location["address"] as? String
+                city    = location["city"] as? String
+                state   = location["state"] as? String
+                zip     = location["zip"] as? String
                 
                 if let coordinates = location["coordinates"] as? [String : String] {
                     latitude   = coordinates["lat"]
