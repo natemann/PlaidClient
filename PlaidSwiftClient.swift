@@ -9,11 +9,11 @@
 import Foundation
 
 
-class PlaidSwiftClient {
+struct PlaidSwiftClient {
 
     //    MARK: Class Functions
     
-    class func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution], error: NSError?) -> ()) {
+    static func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution], error: NSError?) -> ()) {
         Alamofire.manager.request(.GET, PlaidURL.institutions).responseJSON {(request, response, data, error) in
             if let institutions = data as? [[String : AnyObject]] {
                 let plaidInstitutions = institutions.map { institution in
@@ -26,7 +26,7 @@ class PlaidSwiftClient {
     
     
     
-    class func loginToInstitution(institution: PlaidInstitution,
+    static func loginToInstitution(institution: PlaidInstitution,
                                      username: String,
                                      password: String,
                                           pin: String,
@@ -49,7 +49,7 @@ class PlaidSwiftClient {
     }
     
     
-    class func submitMFAResponse(response: String,
+    static func submitMFAResponse(response: String,
                               institution: PlaidInstitution,
                               accessToken: String,
                         completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
@@ -68,7 +68,7 @@ class PlaidSwiftClient {
     }
     
     
-    class func downloadTransactions(#accessToken: String,
+    static func downloadTransactions(#accessToken: String,
                                          account: String,
                                          pending: Bool,
                                         fromDate: NSDate?,
