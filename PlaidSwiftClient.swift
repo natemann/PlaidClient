@@ -26,12 +26,7 @@ struct PlaidSwiftClient {
     
     
     
-    static func loginToInstitution(institution: PlaidInstitution,
-                                     username: String,
-                                     password: String,
-                                          pin: String,
-                                        email: String,
-                            completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
+    static func loginToInstitution(institution: PlaidInstitution, username: String, password: String, pin: String, email: String, completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
         let credentials = ["username" : username,
                            "password" : password,
                                 "pin" : pin]
@@ -49,10 +44,7 @@ struct PlaidSwiftClient {
     }
     
     
-    static func submitMFAResponse(response: String,
-                              institution: PlaidInstitution,
-                              accessToken: String,
-                        completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
+    static func submitMFAResponse(response: String, institution: PlaidInstitution, accessToken: String, completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
                             
         let parameters: [String: AnyObject] = ["client_id" : clientIDToken,
                                                   "secret" : secretToken,
@@ -68,12 +60,7 @@ struct PlaidSwiftClient {
     }
     
     
-    static func downloadTransactions(#accessToken: String,
-                                         account: String,
-                                         pending: Bool,
-                                        fromDate: NSDate?,
-                                          toDate: NSDate?,
-                                         success: (response: NSHTTPURLResponse, plaidTransactions: [PlaidTransaction]) -> ()) {
+    static func downloadTransactions(#accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, success: (response: NSHTTPURLResponse, plaidTransactions: [PlaidTransaction]) -> ()) {
         var options: [String: AnyObject] = ["pending" : pending,
                                             "account" : account]
         if let fromDate = fromDate {
