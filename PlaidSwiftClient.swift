@@ -16,9 +16,7 @@ struct PlaidSwiftClient {
     static func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution], error: NSError?) -> ()) {
         Alamofire.manager.request(.GET, PlaidURL.institutions).responseJSON {(request, response, data, error) in
             if let institutions = data as? [[String : AnyObject]] {
-                let plaidInstitutions = institutions.map { institution in
-                    PlaidInstitution(institution: institution)
-                }
+                let plaidInstitutions = institutions.map { PlaidInstitution(institution: $0) }
                 completionHandler(response: response, institutions: plaidInstitutions, error: error)
             }
         }
@@ -77,14 +75,14 @@ struct PlaidSwiftClient {
                                                           "options" : options]
                                             
         Alamofire.manager.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
+            println(data)
             if let transactions = data?["transactions"] as? [[String: AnyObject]] {
-                let plaidTransactions = transactions.map { transaction in
-                    PlaidTransaction(transaction: transaction)
-                }
+                let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
                 success(response: response!, plaidTransactions: plaidTransactions)
             }
         }
     }
+    
 }
 
 
@@ -104,6 +102,7 @@ extension NSDecimalNumber {
         
         return number.decimalNumberByRoundingAccordingToBehavior(handler)
     }
+    
 }
 
 
