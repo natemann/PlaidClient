@@ -49,7 +49,7 @@ struct PlaidAccount {
     
     init(account: [String : AnyObject]) {
         let meta           = account["meta"]! as [String: AnyObject]
-        let accountBalance = account["balance"]! as [String: Double]
+        let accountBalance = account["balance"]! as [String: AnyObject]
         
         name    = meta["name"]! as String
         number  = meta["number"]! as String

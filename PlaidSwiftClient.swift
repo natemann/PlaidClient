@@ -75,7 +75,6 @@ struct PlaidSwiftClient {
                                                           "options" : options]
                                             
         Alamofire.manager.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
-            println(data)
             if let transactions = data?["transactions"] as? [[String: AnyObject]] {
                 let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
                 success(response: response!, plaidTransactions: plaidTransactions)
@@ -92,12 +91,7 @@ struct PlaidSwiftClient {
 extension NSDecimalNumber {
     
     class func roundTwoDecimalPlaces(#double: Double) -> NSDecimalNumber {
-        let handler = NSDecimalNumberHandler(roundingMode: .RoundPlain,
-                                                    scale: 2,
-                                         raiseOnExactness: true,
-                                          raiseOnOverflow: true,
-                                         raiseOnUnderflow: true,
-                                      raiseOnDivideByZero: true)
+        let handler = NSDecimalNumberHandler(roundingMode: .RoundPlain, scale: 2, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true)
         let number  = NSDecimalNumber(double: double)
         
         return number.decimalNumberByRoundingAccordingToBehavior(handler)
