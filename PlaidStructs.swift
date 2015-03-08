@@ -17,7 +17,7 @@ struct PlaidURL {
 }
 
 
-struct PlaidInstitution {
+public struct PlaidInstitution {
     
     let credentials: [String : String]
     let has_mfa:     Bool
@@ -27,7 +27,7 @@ struct PlaidInstitution {
     let mfa:         [String]
     let products:    [String]
     
-    init(institution: [String : AnyObject]) {
+    public init(institution: [String : AnyObject]) {
         credentials = institution["credentials"]! as [String : String]
         has_mfa     = institution["has_mfa"]! as Int == 1 ? true : false
         id          = institution["id"]! as String
@@ -60,7 +60,7 @@ struct PlaidAccount {
 }
 
 
-struct PlaidTransaction {
+public struct PlaidTransaction {
     
     let account:    String
     let id:         String
@@ -83,7 +83,7 @@ struct PlaidTransaction {
     let longitude:  String?
 
     
-    init(transaction: [String : AnyObject]) {
+    public init(transaction: [String : AnyObject]) {
 
         let meta        = transaction["meta"] as [String : AnyObject]
         let location    = meta["location"] as? [String : AnyObject]

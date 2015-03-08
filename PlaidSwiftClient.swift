@@ -58,7 +58,7 @@ struct PlaidSwiftClient {
     }
     
     
-    static func downloadTransactions(#accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, success: (response: NSHTTPURLResponse, plaidTransactions: [PlaidTransaction]) -> ()) {
+    static func downloadAccountData(#accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, success: (response: NSHTTPURLResponse, account: PlaidAccount, plaidTransactions: [PlaidTransaction]) -> ()) {
         var options: [String: AnyObject] = ["pending" : pending,
                                             "account" : account]
         if let fromDate = fromDate {
@@ -73,11 +73,15 @@ struct PlaidSwiftClient {
                                                            "secret" : secretToken,
                                                      "access_token" : accessToken,
                                                           "options" : options]
-                                            
+        
         Alamofire.manager.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
-            if let transactions = data?["transactions"] as? [[String: AnyObject]] {
-                let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
-                success(response: response!, plaidTransactions: plaidTransactions)
+            if let transactions = data?["transactions"] as? [[String : AnyObject]] {
+                if let accounts = data?["accounts"] as? [[String : AnyObject]] {
+                    if let accountData = accounts.first {
+                        let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
+                        success(response: response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions)
+                    }
+                }
             }
         }
     }
