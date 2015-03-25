@@ -55,7 +55,7 @@ struct PlaidAccount {
         number  = meta["number"]! as String
         id      = account["_id"]! as String
         type    = account["type"]! as String
-        balance = NSDecimalNumber(double: accountBalance["current"]! as Double)
+        balance = account["type"]! as NSString == "credit" ?  NSDecimalNumber(double: accountBalance["current"]! as Double) * -1 : NSDecimalNumber(double: accountBalance["current"]! as Double)
     }
 }
 
