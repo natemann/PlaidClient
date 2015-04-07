@@ -24,7 +24,7 @@ struct PlaidSwiftClient {
     
     
     
-    static func loginToInstitution(institution: PlaidInstitution, username: String, password: String, pin: String, email: String, completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
+    static func loginToInstitution(institution: PlaidInstitution, username: String, password: String, pin: String, email: String, callBack: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
         let credentials = ["username" : username,
                            "password" : password,
                                 "pin" : pin]
@@ -37,12 +37,12 @@ struct PlaidSwiftClient {
         
         Alamofire.manager.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
             let responseObject = data! as [String: AnyObject]
-            completionHandler(response: response!, responseData: responseObject)
+            callBack(response: response!, responseData: responseObject)
         }
     }
     
     
-    static func submitMFAResponse(response: String, institution: PlaidInstitution, accessToken: String, completionHandler: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
+    static func submitMFAResponse(response: String, institution: PlaidInstitution, accessToken: String, callBack: (response: NSHTTPURLResponse, responseData: [String: AnyObject]) -> ()) {
                             
         let parameters: [String: AnyObject] = ["client_id" : clientIDToken,
                                                   "secret" : secretToken,
@@ -52,13 +52,13 @@ struct PlaidSwiftClient {
                             
         Alamofire.manager.request(.POST, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
             if let responseObject = data as? [String: AnyObject] {
-                completionHandler(response: response!, responseData: responseObject)
+                callBack(response: response!, responseData: responseObject)
             }
         }
     }
     
     
-    static func downloadAccountData(#accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, success: (response: NSHTTPURLResponse, account: PlaidAccount, plaidTransactions: [PlaidTransaction]) -> ()) {
+    static func downloadAccountData(#accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, callBack: (response: NSHTTPURLResponse, account: PlaidAccount?, plaidTransactions: [PlaidTransaction]?, error: NSError?) -> ()) {
         var options: [String: AnyObject] = ["pending" : pending,
                                             "account" : account]
         if let fromDate = fromDate {
@@ -73,16 +73,36 @@ struct PlaidSwiftClient {
                                                            "secret" : secretToken,
                                                      "access_token" : accessToken,
                                                           "options" : options]
-        
         Alamofire.manager.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
+            if error != nil {
+                callBack(response: response!, account: nil, plaidTransactions: nil, error: error)
+            }
+            
+            if let code = data?["code"] as? Int {
+                switch code {
+                case 1206:
+                    let accessToken = data!["access_token"] as String
+                    let userInfo = [NSLocalizedDescriptionKey : "Download was unsuccessful",
+                                    "accessToken" : data?["access_token"] as String,
+                                    NSLocalizedFailureReasonErrorKey: "Account not connected",
+                                    NSLocalizedRecoverySuggestionErrorKey : "Recconnect the account"]
+                    let connectionError = NSError(domain: "com.nathanmann.InTheBlack", code: 1206, userInfo: userInfo)
+                    
+                    callBack(response: response!, account: nil, plaidTransactions: nil, error: connectionError)
+                default:
+                    return
+                }
+            }
+            
             if let transactions = data?["transactions"] as? [[String : AnyObject]] {
                 if let accounts = data?["accounts"] as? [[String : AnyObject]] {
                     if let accountData = accounts.first {
                         let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
-                        success(response: response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions)
+                        callBack(response: response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions, error: error)
                     }
                 }
             }
+            callBack(response: response!, account: nil, plaidTransactions: nil, error: nil)
         }
     }
     
