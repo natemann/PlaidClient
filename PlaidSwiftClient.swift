@@ -7,14 +7,14 @@
 //
 
 import Foundation
-
+import Alamofire
 
 struct PlaidSwiftClient {
 
     //    MARK: Class Functions
     
     static func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution], error: NSError?) -> ()) {
-        Alamofire.manager.request(.GET, PlaidURL.institutions).responseJSON {(request, response, data, error) in
+        Alamofire.request(.GET, PlaidURL.institutions).responseJSON {(request, response, data, error) in
             if let institutions = data as? [[String : AnyObject]] {
                 let plaidInstitutions = institutions.map { PlaidInstitution(institution: $0) }
                 completionHandler(response: response, institutions: plaidInstitutions, error: error)
@@ -35,8 +35,8 @@ struct PlaidSwiftClient {
                                                     "type" : institution.type,
                                                    "email" : email]
         
-        Alamofire.manager.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
-            let responseObject = data! as [String: AnyObject]
+        Alamofire.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
+            let responseObject = data! as! [String: AnyObject]
             callBack(response: response!, responseData: responseObject)
         }
     }
@@ -50,7 +50,7 @@ struct PlaidSwiftClient {
                                             "access_token" : accessToken,
                                                     "type" : institution.type]
                             
-        Alamofire.manager.request(.POST, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
+        Alamofire.request(.POST, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
             if let responseObject = data as? [String: AnyObject] {
                 callBack(response: response!, responseData: responseObject)
             }
@@ -73,7 +73,7 @@ struct PlaidSwiftClient {
                                                            "secret" : secretToken,
                                                      "access_token" : accessToken,
                                                           "options" : options]
-        Alamofire.manager.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
+        Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
             if error != nil {
                 callBack(response: response!, account: nil, plaidTransactions: nil, error: error)
             }
@@ -81,9 +81,9 @@ struct PlaidSwiftClient {
             if let code = data?["code"] as? Int {
                 switch code {
                 case 1206:
-                    let accessToken = data!["access_token"] as String
+                    let accessToken = data!["access_token"] as! String
                     let userInfo = [NSLocalizedDescriptionKey : "Download was unsuccessful",
-                                    "accessToken" : data?["access_token"] as String,
+                                    "accessToken" : data?["access_token"] as! String,
                                     NSLocalizedFailureReasonErrorKey: "Account not connected",
                                     NSLocalizedRecoverySuggestionErrorKey : "Recconnect the account"]
                     let connectionError = NSError(domain: "com.nathanmann.InTheBlack", code: 1206, userInfo: userInfo)
