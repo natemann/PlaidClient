@@ -58,6 +58,20 @@ struct PlaidSwiftClient {
     }
     
     
+    static func patchInstitution(accessToken: String, username: String, password: String, pin: String, callBack: (response: NSHTTPURLResponse, data: [String: AnyObject]) -> ()) {
+        let parameters = ["client_id" : clientIDToken,
+                             "secret" : secretToken,
+                           "username" : username,
+                           "password" : password,
+                                "pin" : pin,
+                       "access_token" : accessToken]
+        
+        Alamofire.request(.PATCH, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
+            callBack(response: response!, data: data as! [String : AnyObject])
+        }
+    }
+    
+    
     static func downloadAccountData(#accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, callBack: (response: NSHTTPURLResponse, account: PlaidAccount?, plaidTransactions: [PlaidTransaction]?, error: NSError?) -> ()) {
         var options: [String: AnyObject] = ["pending" : pending,
                                             "account" : account]
