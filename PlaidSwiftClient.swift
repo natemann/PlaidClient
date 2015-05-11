@@ -88,15 +88,20 @@ struct PlaidSwiftClient {
     }
     
     
-    static func patchSubmitMFAResponse(response: String, accessToken: String, username: String, password: String, pin: String, callBack: (response: NSHTTPURLResponse, data: [String : AnyObject]) -> ()) {
+    static func patchSubmitMFAResponse(response: String, accessToken: String, username: String, password: String, callBack: (response: NSHTTPURLResponse, data: [String : AnyObject]) -> ()) {
         let parameters = ["client_id" : clientIDToken,
                              "secret" : secretToken,
-                           "username" : username,
-                           "password" : password,
-                                "pin" : pin,
+//                           "username" : username,
+//                           "password" : password,
+//                                "pin" : pin,
                        "access_token" : accessToken,
                                 "mfa" : response]
-        Alamofire.request(.PATCH, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in callBack(response: response!, data: data as! [String : AnyObject]) }
+        Alamofire.request(.PATCH, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
+            println(response)
+            println(data)
+            println(error)
+            callBack(response: response!, data: data as! [String : AnyObject])
+        }
     }
     
     
@@ -120,9 +125,10 @@ struct PlaidSwiftClient {
             if error != nil {
                 callBack(response: response!, account: nil, plaidTransactions: nil, error: error)
             }
+            println(data)
             if let code = data?["code"] as? Int {
                 switch code {
-                case 1200:
+                case 1205:
                     let accessToken = data!["access_token"] as! String
                     let userInfo = [NSLocalizedDescriptionKey : "Account Locked",
                                                 "accessToken" : accessToken,
@@ -131,7 +137,7 @@ struct PlaidSwiftClient {
                     let connectionError = NSError(domain: "com.nathanmann.InTheBlack", code: 1205, userInfo: userInfo)
                     
                     callBack(response: response!, account: nil, plaidTransactions: nil, error: connectionError)
-                case 1203, 1206, 1215, 1205:
+                case 1206, 1215:
                     let accessToken = data!["access_token"] as! String
                     let userInfo = [NSLocalizedDescriptionKey : "Download was unsuccessful",
                                                 "accessToken" : accessToken,
