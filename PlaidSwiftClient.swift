@@ -44,13 +44,8 @@ struct PlaidSwiftClient {
                                                    "email" : email]
         
         Alamofire.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
-<<<<<<< Updated upstream
             let responseObject = data! as! [String: AnyObject]
             callBack(response: response!, responseData: responseObject)
-=======
-            let responseObject = data! as [String: AnyObject]
-            completionHandler(response: response!, responseData: responseObject)
->>>>>>> Stashed changes
         }
     }
     
@@ -80,9 +75,6 @@ struct PlaidSwiftClient {
                        "access_token" : accessToken]
         
         Alamofire.request(.PATCH, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
-            println(response)
-            println(data)
-            println(error)
             callBack(response: response!, data: data as! [String : AnyObject])
         }
     }
@@ -97,9 +89,6 @@ struct PlaidSwiftClient {
                        "access_token" : accessToken,
                                 "mfa" : response]
         Alamofire.request(.PATCH, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { (request, response, data, error) in
-            println(response)
-            println(data)
-            println(error)
             callBack(response: response!, data: data as! [String : AnyObject])
         }
     }
@@ -120,12 +109,10 @@ struct PlaidSwiftClient {
                                                            "secret" : secretToken,
                                                      "access_token" : accessToken,
                                                           "options" : options]
-<<<<<<< Updated upstream
         Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
             if error != nil {
                 callBack(response: response!, account: nil, plaidTransactions: nil, error: error)
             }
-            println(data)
             if let code = data?["code"] as? Int {
                 switch code {
                 case 1205:
@@ -148,16 +135,6 @@ struct PlaidSwiftClient {
                     callBack(response: response!, account: nil, plaidTransactions: nil, error: connectionError)
                 default:
                     return
-=======
-        
-        Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { (request, response, data, error) in
-            if let transactions = data?["transactions"] as? [[String : AnyObject]] {
-                if let accounts = data?["accounts"] as? [[String : AnyObject]] {
-                    if let accountData = accounts.first {
-                        let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
-                        success(response: response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions)
-                    }
->>>>>>> Stashed changes
                 }
             }
             
