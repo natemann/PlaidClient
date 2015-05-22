@@ -121,7 +121,7 @@ struct PlaidSwiftClient {
                                                 "accessToken" : accessToken,
                              NSLocalizedFailureReasonErrorKey : "Cannot Access Account",
                         NSLocalizedRecoverySuggestionErrorKey : "Unlock Account"]
-                    let connectionError = NSError(domain: "com.nathanmann.InTheBlack", code: 1205, userInfo: userInfo)
+                    let connectionError = NSError(domain: "Domain", code: 1205, userInfo: userInfo)
                     
                     callBack(response: response!, account: nil, plaidTransactions: nil, error: connectionError)
                 case 1206, 1215:
@@ -130,7 +130,7 @@ struct PlaidSwiftClient {
                                                 "accessToken" : accessToken,
                              NSLocalizedFailureReasonErrorKey : "Account not connected",
                         NSLocalizedRecoverySuggestionErrorKey : "Recconnect the account"]
-                    let connectionError = NSError(domain: "com.nathanmann.InTheBlack", code: 1206, userInfo: userInfo)
+                    let connectionError = NSError(domain: "Domain", code: 1206, userInfo: userInfo)
                     
                     callBack(response: response!, account: nil, plaidTransactions: nil, error: connectionError)
                 default:
