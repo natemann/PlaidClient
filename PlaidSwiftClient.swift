@@ -122,8 +122,8 @@ struct PlaidSwiftClient {
                              NSLocalizedFailureReasonErrorKey : "Cannot Access Account",
                         NSLocalizedRecoverySuggestionErrorKey : "Unlock Account"]
                     let connectionError = NSError(domain: "Domain", code: 1205, userInfo: userInfo)
-                    
                     callBack(response: response!, account: nil, plaidTransactions: nil, error: connectionError)
+                    
                 case 1206, 1215:
                     let accessToken = data!["access_token"] as! String
                     let userInfo = [NSLocalizedDescriptionKey : "Download was unsuccessful",
@@ -131,8 +131,8 @@ struct PlaidSwiftClient {
                              NSLocalizedFailureReasonErrorKey : "Account not connected",
                         NSLocalizedRecoverySuggestionErrorKey : "Recconnect the account"]
                     let connectionError = NSError(domain: "Domain", code: 1206, userInfo: userInfo)
-                    
                     callBack(response: response!, account: nil, plaidTransactions: nil, error: connectionError)
+                    
                 default:
                     return
                 }
