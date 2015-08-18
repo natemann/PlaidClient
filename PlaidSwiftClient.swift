@@ -192,13 +192,16 @@ extension NSDateFormatter {
         return dateFormatter
     }
     
+    
     class func plaidDate(date date: NSDate) -> String {
         return dateFormatter.stringFromDate(date)
     }
     
+    
     class func dateFromString(string: String) -> NSDate {
         return dateFormatter.dateFromString(string)!
     }
+    
 }
 
 
