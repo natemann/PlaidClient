@@ -63,25 +63,25 @@ struct PlaidAccount {
 
 public struct PlaidTransaction {
     
-    let account:    String
-    let id:         String
-    let pendingID:  String?
-    let amount:     NSDecimalNumber
-    let date:       NSDate
-    let pending:    Bool
-    let type:       [String : String]
-    let categoryID: String?
+    public var account:    String
+    public var id:         String
+    public var pendingID:  String?
+    public var amount:     NSDecimalNumber
+    public var date:       NSDate
+    public var pending:    Bool
+    public var type:       [String : String]
+    public var categoryID: String?
     
-    let name:       String
-    let address:    String?
-    let city:       String?
-    let state:      String?
-    let zip:        String?
-    let telephone:  String?
-    let factual:    String?
-    let fourSquare: String?
-    let latitude:   String?
-    let longitude:  String?
+    public var name:       String
+    public var address:    String?
+    public var city:       String?
+    public var state:      String?
+    public var zip:        String?
+    public var telephone:  String?
+    public var factual:    String?
+    public var fourSquare: String?
+    public var latitude:   String?
+    public var longitude:  String?
     
     
     public init(transaction: [String : AnyObject]) {
