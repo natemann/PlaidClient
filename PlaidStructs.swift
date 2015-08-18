@@ -15,6 +15,7 @@ struct PlaidURL {
     static let institutions = baseURL + "/institutions"
     static let connect      = baseURL + "/connect"
     static let step         = connect + "/step"
+    
 }
 
 
@@ -40,7 +41,17 @@ public struct PlaidInstitution {
 }
 
 
-struct PlaidAccount {
+extension PlaidInstitution: Equatable {}
+
+public func ==(lhs: PlaidInstitution, rhs: PlaidInstitution) -> Bool {
+    return lhs.id == rhs.id
+}
+
+
+
+
+
+public struct PlaidAccount {
     
     let name:     String
     let number:   String
@@ -59,6 +70,16 @@ struct PlaidAccount {
         balance = account["type"]! as! NSString == "credit" ?  NSDecimalNumber(double: accountBalance["current"]! as! Double) * -1 : NSDecimalNumber(double: accountBalance["current"]! as! Double)
     }
 }
+
+
+extension PlaidAccount: Equatable {}
+
+public func ==(lhs: PlaidAccount, rhs: PlaidAccount) -> Bool {
+    return lhs.id == lhs.id
+}
+
+
+
 
 
 public struct PlaidTransaction {
@@ -96,7 +117,7 @@ public struct PlaidTransaction {
         account    = transaction["_account"]! as! String
         id         = transaction["_id"]! as! String
         pendingID  = transaction["_pendingTransaction"] as? String
-        amount     = NSDecimalNumber.roundTwoDecimalPlaces(double: transaction["amount"]! as! Double * -1)  //Plaid stores withdraws as positves and deposits as negatives
+        amount     = NSDecimalNumber(double: transaction["amount"] as! Double).roundTo(2) * -1 //Plaid stores withdraws as positves and deposits as negatives
         date       = NSDateFormatter.dateFromString(transaction["date"]! as! String)
         pending    = transaction["pending"]! as! Bool
         type       = transaction["type"]! as! [String : String]
@@ -112,4 +133,35 @@ public struct PlaidTransaction {
         fourSquare = ids?["foursquare"] as? String
 
     }
+    
 }
+
+
+extension PlaidTransaction: Equatable {}
+
+public func ==(lhs: PlaidTransaction, rhs: PlaidTransaction) -> Bool {
+    return lhs.id == lhs.id
+}
+
+
+
+
+
+protocol Roundable {
+    
+    func roundTo(places: Int16) -> NSDecimalNumber
+    
+}
+
+
+extension Roundable where Self: NSDecimalNumber {
+    
+    func roundTo(places: Int16) -> NSDecimalNumber {
+        return self.decimalNumberByRoundingAccordingToBehavior(NSDecimalNumberHandler(roundingMode: .RoundPlain, scale: places, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true))
+    }
+    
+}
+
+
+extension NSDecimalNumber: Roundable { }
+

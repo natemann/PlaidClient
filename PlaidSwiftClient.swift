@@ -14,7 +14,6 @@ enum AccountInfoRetrevalError: ErrorType {
     case Locked(accessToken: String)
     case NotConnected(accessToken: String)
     
-    
 }
 
 
@@ -157,14 +156,14 @@ struct PlaidSwiftClient {
             
             if let code = data["code"] as? Int {
                 switch code {
-                case 1205:
-                    callBack(response: response!, account: nil, plaidTransactions: nil, error: .Locked(accessToken: accessToken))
+                    case 1205:
+                        callBack(response: response!, account: nil, plaidTransactions: nil, error: .Locked(accessToken: accessToken))
                     
-                case 1206, 1215:
-                    callBack(response: response!, account: nil, plaidTransactions: nil, error: .NotConnected(accessToken: accessToken))
+                    case 1206, 1215:
+                        callBack(response: response!, account: nil, plaidTransactions: nil, error: .NotConnected(accessToken: accessToken))
                     
-                default:
-                    return
+                    default:
+                        return
                 }
             }
             
@@ -174,21 +173,6 @@ struct PlaidSwiftClient {
             }
             callBack(response: response!, account: nil, plaidTransactions: nil, error: nil)
         }
-    }
-    
-}
-
-
-
-
-
-extension NSDecimalNumber {
-    
-    class func roundTwoDecimalPlaces(double double: Double) -> NSDecimalNumber {
-        let handler = NSDecimalNumberHandler(roundingMode: .RoundPlain, scale: 2, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true)
-        let number  = NSDecimalNumber(double: double)
-        
-        return number.decimalNumberByRoundingAccordingToBehavior(handler)
     }
     
 }
