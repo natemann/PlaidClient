@@ -24,27 +24,44 @@ struct PlaidSwiftClient {
     
     //    MARK: Class Functions
     
-    static func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]?) -> ()) {
-        Alamofire.request(.GET, PlaidURL.institutions).responseJSON { _, response, result in
-            guard let institutions = result.value as? [JSON] else {
-                completionHandler(response: nil, institutions: nil)
+    static func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
+        Alamofire.request(.GET, PlaidURL.institutions).responseJSON { response in
+            guard let institutions = response.result.value as? [JSON] else {
+                completionHandler(response: nil, institutions: [])
                 return
             }
             
-            let plaidInstitutions = institutions.map { PlaidInstitution(institution: $0) }
-            completionHandler(response: response, institutions: plaidInstitutions)
+            let plaidInstitutions = institutions.map { PlaidInstitution(institution: $0) }.flatMap { $0 }
+            completionHandler(response: response.response, institutions: plaidInstitutions)
+        }
+    }
+    
+    
+    static func intuitInstitutions(count: Int, skip: Int, completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
+        let parameters = ["client_id" : clientIDToken, "secret" : secretToken, "count" : String(count), "offset" : String(skip)]
+        
+        Alamofire.request(.POST, PlaidURL.intuit, parameters: parameters, encoding: .JSON).responseJSON { response in
+            print(response.result.value)
+            guard let results = response.result.value as? [String : AnyObject],
+                  let json = results["results"] as? [JSON] else {
+                completionHandler(response: nil, institutions: [])
+                return
+            }
+            let intuitInstitutions = json.map { PlaidInstitution(institution: $0) }.flatMap { $0 }
+            completionHandler(response: response.response, institutions: intuitInstitutions)
         }
     }
     
     
     static func plaidInstitutionWithID(id: String, callBack: (response: NSHTTPURLResponse?, institution: PlaidInstitution?) -> ()) {
-        Alamofire.request(.GET, PlaidURL.institutions + "/\(id)").responseJSON { _, response, result in
-            guard let institution = result.value as? JSON else {
-                callBack(response: response, institution: nil)
+        Alamofire.request(.GET, PlaidURL.institutions + "/\(id)").responseJSON { response in
+
+            guard let institution = response.result.value as? JSON else {
+                callBack(response: response.response, institution: nil)
                 return
             }
             
-            callBack(response: response, institution: PlaidInstitution(institution: institution))
+            callBack(response: response.response, institution: PlaidInstitution(institution: institution))
         }
     }
     
@@ -61,14 +78,13 @@ struct PlaidSwiftClient {
                                      "type" : institution.type,
                                     "email" : email]
         
-        Alamofire.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { _, response, result in
-            guard let responseObject = result.value as? JSON else {
-                callBack(response: response, responseData: nil)
+        Alamofire.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { response in
+            guard let responseObject = response.result.value as? JSON else {
+                callBack(response: response.response, responseData: nil)
                 return
             }
             
-            callBack(response: response, responseData: responseObject)
-            
+            callBack(response: response.response, responseData: responseObject)
         }
     }
     
@@ -81,13 +97,13 @@ struct PlaidSwiftClient {
                              "access_token" : accessToken,
                                      "type" : institution.type]
                             
-        Alamofire.request(.POST, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { _, response, result in
-            guard let responseObject = result.value as? JSON else {
-                callBack(response: response, responseData: nil)
+        Alamofire.request(.POST, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { response in
+            guard let responseObject = response.result.value as? JSON else {
+                callBack(response: response.response, responseData: nil)
                 return
             }
             
-            callBack(response: response, responseData: responseObject)
+            callBack(response: response.response, responseData: responseObject)
         }
     }
     
@@ -101,13 +117,13 @@ struct PlaidSwiftClient {
                                 "pin" : pin,
                        "access_token" : accessToken]
         
-        Alamofire.request(.PATCH, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { (_, response, result) in
-            guard let data = result.value as? JSON else {
-                callBack(response: response, data: nil)
+        Alamofire.request(.PATCH, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { response in
+            guard let data = response.result.value as? JSON else {
+                callBack(response: response.response, data: nil)
                 return
             }
             
-            callBack(response: response, data: data)
+            callBack(response: response.response, data: data)
         }
     }
     
@@ -120,13 +136,13 @@ struct PlaidSwiftClient {
 //                                "pin" : pin,
                        "access_token" : accessToken,
                                 "mfa" : response]
-        Alamofire.request(.PATCH, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { _, response, result in
-            guard let data = result.value as? JSON else {
-                callBack(response: response, data: nil)
+        Alamofire.request(.PATCH, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON { response in
+            guard let data = response.result.value as? JSON else {
+                callBack(response: response.response, data: nil)
                 return
             }
             
-            callBack(response: response, data: data)
+            callBack(response: response.response, data: data)
         }
     }
     
@@ -151,16 +167,16 @@ struct PlaidSwiftClient {
                                                      "access_token" : accessToken,
                                                           "options" : options]
         
-        Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { _, response, result in
-            guard let data = result.value as? JSON else { return }
+        Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { response in
+            guard let data = response.result.value as? JSON else { return }
             
             if let code = data["code"] as? Int {
                 switch code {
                     case 1205:
-                        callBack(response: response!, account: nil, plaidTransactions: nil, error: .Locked(accessToken: accessToken))
+                        callBack(response: response.response!, account: nil, plaidTransactions: nil, error: .Locked(accessToken: accessToken))
                     
                     case 1206, 1215:
-                        callBack(response: response!, account: nil, plaidTransactions: nil, error: .NotConnected(accessToken: accessToken))
+                        callBack(response: response.response!, account: nil, plaidTransactions: nil, error: .NotConnected(accessToken: accessToken))
                     
                     default:
                         return
@@ -169,9 +185,9 @@ struct PlaidSwiftClient {
             
             if let transactions = data["transactions"] as? [JSON], accounts = data["accounts"] as? [[String : AnyObject]], accountData = accounts.first {
                 let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
-                callBack(response: response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions, error: nil)
+                callBack(response: response.response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions, error: nil)
             }
-            callBack(response: response!, account: nil, plaidTransactions: nil, error: nil)
+            callBack(response: response.response!, account: nil, plaidTransactions: nil, error: nil)
         }
     }
     

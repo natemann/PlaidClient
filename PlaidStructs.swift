@@ -13,6 +13,7 @@ struct PlaidURL {
     
     static let baseURL      = "https://tartan.plaid.com"
     static let institutions = baseURL + "/institutions"
+    static let intuit       = institutions + "/intuit"
     static let connect      = baseURL + "/connect"
     static let step         = connect + "/step"
     
@@ -21,22 +22,75 @@ struct PlaidURL {
 
 public struct PlaidInstitution {
     
+    public enum Source {
+        case Plaid, Intuit
+    }
+    
     let credentials: [String : String]
     let has_mfa:     Bool
     let id:          String
     let name:        String
     let type:        String
-    let mfa:         [String]
+    let mfa:         [String]?
     let products:    [String]
+    let source:      Source
     
-    public init(institution: [String : AnyObject]) {
-        credentials = institution["credentials"]! as! [String : String]
-        has_mfa     = institution["has_mfa"]! as! Int == 1 ? true : false
-        id          = institution["id"]! as! String
-        name        = institution["name"]! as! String
-        type        = institution["type"]! as! String
-        mfa         = institution["mfa"]! as! [String]
-        products    = institution["products"]! as! [String]
+    //Attributes unique to Intuit Accounts
+    
+    let active:         Bool?
+    let has_bad_mfa:    Bool?
+    let intuit_blocked: Bool?
+    let ranking:        Int?
+    let url:            String?
+    
+    public init?(institution: [String : AnyObject]) {
+        
+        //Common Attributes between Plaid Accounts and Intuit Accounts
+        //If these Attributes are not fullfilled, return nil
+        
+        guard let credentials = institution["credentials"] as? [String : String],
+              let has_mfa     = institution["has_mfa"] as? Int,
+              let name        = institution["name"] as? String,
+              let products    = institution["products"] as? [String],
+              let type        = institution["type"] as? String else {
+                return nil
+        }
+        
+        //Set common Attributes
+        
+        self.credentials = credentials
+        self.has_mfa     = has_mfa == 1 ? true : false
+        self.name        = name
+        self.type        = type
+        self.products    = products
+        self.mfa         = institution["mfa"] as? [String] //This might be an optional field for intuit accounts.  All seem to have credentials though.
+        
+        //Determine Source by ID field
+        
+        let plaidID = institution["id"] as? String
+        let intuitID = institution["intuit_id"] as? String
+        
+        switch (plaidID, intuitID) {
+        
+        case (.Some(let id), _):
+            self.id     = id
+            self.source = .Plaid
+            
+        case (_, .Some(let id)):
+            self.id     = id
+            self.source = .Intuit
+            
+        default:
+            return nil
+        }
+        
+        //Set Intuit Attributes
+        
+        self.active         = institution["active"] as? Int == 1 ? true : false
+        self.has_bad_mfa    = institution["has_bad_mfa"] as? Int == 1 ? true : false
+        self.intuit_blocked = institution["intuit_blocked"] as? Int == 1 ? true : false
+        self.ranking        = institution["ranking"] as? Int
+        self.url            = institution["url"] as? String
     }
 }
 
@@ -49,6 +103,51 @@ public func ==(lhs: PlaidInstitution, rhs: PlaidInstitution) -> Bool {
 
 
 
+//public struct IntuitInstitution {
+//    
+//    let active:         Bool
+//    let credentials:    [String : String]
+//    let has_bad_mfa:    Bool
+//    let has_mfa:        Bool
+//    let intuit_blocked: Bool
+//    let intuit_id:      String
+//    let mfa:            [String : String]?
+//    let name:           String
+//    let products:       [String]
+//    let ranking:        Int
+//    let type:           String
+//    let url:            String
+//    
+//    init?(institution: [String : AnyObject]) {
+//        guard let active = institution["active"] as? Int,
+//              let credentials = institution["credentials"] as? [String : String],
+//              let has_bad_mfa = institution["has_bad_mfa"] as? Int,
+//              let has_mfa = institution["has_mfa"] as? Int ,
+//              let intuit_blocked = institution["intuit_blocked"] as? Int,
+//              let intuit_id = institution["intuit_id"] as? String,
+//              let name = institution["name"] as? String,
+//              let products = institution["products"] as? [String],
+//              let ranking = institution["ranking"] as? Int,
+//              let type = institution["type"] as? String,
+//              let url = institution["url"] as? String
+//            else {
+//            return nil
+//        }
+//        
+//        self.active         = active == 1 ? true : false
+//        self.credentials    = credentials
+//        self.has_bad_mfa    = has_bad_mfa == 1 ? true : false
+//        self.has_mfa        = has_mfa == 1 ? true : false
+//        self.intuit_blocked = intuit_blocked == 1 ? true : false
+//        self.intuit_id      = intuit_id
+//        self.mfa            = institution["mfa"] as? [String : String] ?? nil
+//        self.name           = name
+//        self.products       = products
+//        self.ranking        = ranking
+//        self.type           = type
+//        self.url            = url
+//    }
+//}
 
 
 public struct PlaidAccount {
