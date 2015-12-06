@@ -30,7 +30,6 @@ public struct PlaidTransaction {
     
     
     public init(transaction: [String : AnyObject]) {
-
         let meta        = transaction["meta"] as! [String : AnyObject]
         let location    = meta["location"] as? [String : AnyObject]
         let coordinates = location?["coordinates"] as? [String : AnyObject]
@@ -56,13 +55,12 @@ public struct PlaidTransaction {
 }
 
 
+
 extension PlaidTransaction: Equatable {}
 
 public func ==(lhs: PlaidTransaction, rhs: PlaidTransaction) -> Bool {
     return lhs.id == lhs.id
 }
-
-
 
 
 
@@ -72,6 +70,7 @@ protocol Roundable {
 }
 
 
+
 extension Roundable where Self: NSDecimalNumber {
     
     func roundTo(places: Int16) -> NSDecimalNumber {
@@ -79,6 +78,7 @@ extension Roundable where Self: NSDecimalNumber {
     }
     
 }
+
 
 
 extension NSDecimalNumber: Roundable { }
