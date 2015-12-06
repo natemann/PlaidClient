@@ -41,9 +41,7 @@ struct PlaidSwiftClient {
         let parameters = ["client_id" : clientIDToken, "secret" : secretToken, "count" : String(count), "offset" : String(skip)]
         
         Alamofire.request(.POST, PlaidURL.intuit, parameters: parameters, encoding: .JSON).responseJSON { response in
-            print(response.result.value)
-            guard let results = response.result.value as? [String : AnyObject],
-                  let json = results["results"] as? [JSON] else {
+            guard let results = response.result.value as? [String : AnyObject], let json = results["results"] as? [JSON] else {
                 completionHandler(response: nil, institutions: [])
                 return
             }
@@ -75,8 +73,7 @@ struct PlaidSwiftClient {
         let parameters: JSON = ["client_id" : clientIDToken,
                                    "secret" : secretToken,
                               "credentials" : credentials,
-                                     "type" : institution.type,
-                                    "email" : email]
+                                     "type" : institution.type]
         
         Alamofire.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON { response in
             guard let responseObject = response.result.value as? JSON else {
@@ -168,14 +165,15 @@ struct PlaidSwiftClient {
                                                           "options" : options]
         
         Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON { response in
+            
             guard let data = response.result.value as? JSON else { return }
             
             if let code = data["code"] as? Int {
                 switch code {
-                    case 1205:
-                        callBack(response: response.response!, account: nil, plaidTransactions: nil, error: .Locked(accessToken: accessToken))
+//                    case 1205:
+//                        callBack(response: response.response!, account: nil, plaidTransactions: nil, error: .Locked(accessToken: accessToken))
                     
-                    case 1206, 1215:
+                    case 1200...1209:
                         callBack(response: response.response!, account: nil, plaidTransactions: nil, error: .NotConnected(accessToken: accessToken))
                     
                     default:
