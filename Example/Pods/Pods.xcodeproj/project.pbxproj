@@ -1,0 +1,646 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		36FB68501A507AA46B45307C348CE599 /* PlaidClient.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6FB8E0B47D33B2560F615D45704F0F4F /* PlaidClient.bundle */; };
+		4325AB441C54274500C68ED5 /* PlaidAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325AB3D1C54274500C68ED5 /* PlaidAccount.swift */; };
+		4325AB451C54274500C68ED5 /* PlaidClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4325AB3E1C54274500C68ED5 /* PlaidClient.h */; };
+		4325AB461C54274500C68ED5 /* PlaidEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325AB3F1C54274500C68ED5 /* PlaidEnums.swift */; };
+		4325AB471C54274500C68ED5 /* PlaidInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325AB401C54274500C68ED5 /* PlaidInstitution.swift */; };
+		4325AB481C54274500C68ED5 /* PlaidSwiftClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325AB411C54274500C68ED5 /* PlaidSwiftClient.swift */; };
+		4325AB491C54274500C68ED5 /* PlaidTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325AB421C54274500C68ED5 /* PlaidTransaction.swift */; };
+		4325AB4A1C54274500C68ED5 /* PlaidURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325AB431C54274500C68ED5 /* PlaidURL.swift */; };
+		92567150C67ECBB662FAB16C795979CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
+		AF58AE9CDD590C11F52271167C7798D7 /* Pods-PlaidClient_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC466A108A22B2FF2880E23A724EE71 /* Pods-PlaidClient_Tests-dummy.m */; };
+		BBDE711D9D7571DC8CAA6918DC40175B /* PlaidClient-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E66ADF7EEEBB306C39A05F97F7EE14E /* PlaidClient-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BCADFD5D49CF61FA3742D356E3F0078B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
+		C09897534B11A91AD088C7E697EA1592 /* PlaidClient-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DA97A4F533F6660C1677C608C36FF0A8 /* PlaidClient-dummy.m */; };
+		C5A3690F4C53F6D3BC2CD940FD4C994C /* Pods-PlaidClient_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F3554DB61CEDAF6CD4BB44BF5A3AF6E9 /* Pods-PlaidClient_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4974C4D4B64CF86C9B7940ACB82C164E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22E5CB697E86FC3CD0B4D3B37918E976;
+			remoteInfo = "PlaidClient-PlaidClient";
+		};
+		FB43A6DFB9CA0B9638923E7981587714 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97BE0B83B5CB358D438197FB1EECC1FA;
+			remoteInfo = PlaidClient;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2EC466A108A22B2FF2880E23A724EE71 /* Pods-PlaidClient_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PlaidClient_Tests-dummy.m"; sourceTree = "<group>"; };
+		3DFE1256F02A102831B88E4DF536B5EC /* Pods-PlaidClient_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PlaidClient_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		4325AB3D1C54274500C68ED5 /* PlaidAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidAccount.swift; sourceTree = "<group>"; };
+		4325AB3E1C54274500C68ED5 /* PlaidClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaidClient.h; sourceTree = "<group>"; };
+		4325AB3F1C54274500C68ED5 /* PlaidEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidEnums.swift; sourceTree = "<group>"; };
+		4325AB401C54274500C68ED5 /* PlaidInstitution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidInstitution.swift; sourceTree = "<group>"; };
+		4325AB411C54274500C68ED5 /* PlaidSwiftClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidSwiftClient.swift; sourceTree = "<group>"; };
+		4325AB421C54274500C68ED5 /* PlaidTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidTransaction.swift; sourceTree = "<group>"; };
+		4325AB431C54274500C68ED5 /* PlaidURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidURL.swift; sourceTree = "<group>"; };
+		433DA376395F2CD5F09B80AC8426A75C /* Pods-PlaidClient_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PlaidClient_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		67EE391C8B21846553D84FD72FC4E431 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6910C5455057D0942F43549FB7956B56 /* Pods-PlaidClient_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PlaidClient_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		6E66ADF7EEEBB306C39A05F97F7EE14E /* PlaidClient-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PlaidClient-umbrella.h"; sourceTree = "<group>"; };
+		6FB8E0B47D33B2560F615D45704F0F4F /* PlaidClient.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlaidClient.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		7865D6787EC0E05E1A82C7F6A73C068A /* Pods-PlaidClient_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PlaidClient_Tests-resources.sh"; sourceTree = "<group>"; };
+		9603FC5CCB6E5FF526375CC87D8C5A5F /* Pods-PlaidClient_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PlaidClient_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		9A18D3DFE2B0E0A4E53592C0825F01E5 /* PlaidClient.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PlaidClient.xcconfig; sourceTree = "<group>"; };
+		9DDC7F5F82DB1FE38F6367E03A50DCDE /* PlaidClient-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PlaidClient-prefix.pch"; sourceTree = "<group>"; };
+		AA9FF7E6AC1E3867CE1449BD808D5957 /* PlaidClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlaidClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BFE05BF8AAC67896ADFBD13876976D48 /* PlaidClient.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = PlaidClient.modulemap; sourceTree = "<group>"; };
+		CEA19D44BE5F5FA1A6CFCC58B6C0EDB5 /* Pods_PlaidClient_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlaidClient_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA97A4F533F6660C1677C608C36FF0A8 /* PlaidClient-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PlaidClient-dummy.m"; sourceTree = "<group>"; };
+		F239EB9145EB89804FFDE454D0E8CF08 /* Pods-PlaidClient_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PlaidClient_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		F3554DB61CEDAF6CD4BB44BF5A3AF6E9 /* Pods-PlaidClient_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PlaidClient_Tests-umbrella.h"; sourceTree = "<group>"; };
+		F6F8941629AD98F9EC01C72F8EAAA3FC /* Pods-PlaidClient_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-PlaidClient_Tests.modulemap"; sourceTree = "<group>"; };
+		FF30A63C3E57EA7FCFCEC7A6D3022155 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		702AE4AE83B98C685006A2F7A4BCF4F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76F628E237BDA1434F373D69458DA973 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCADFD5D49CF61FA3742D356E3F0078B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7844DEC99FD3B5B909C55C6062D2C9FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92567150C67ECBB662FAB16C795979CF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		135506E4789C7A5C98ACFF83CE4CD302 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				D991644D386A8CB7193C65F893DBEC89 /* Classes */,
+			);
+			path = Pod;
+			sourceTree = "<group>";
+		};
+		31BBB64595C4EA8599250666ED8DA322 /* PlaidClient */ = {
+			isa = PBXGroup;
+			children = (
+				135506E4789C7A5C98ACFF83CE4CD302 /* Pod */,
+				404A6B5FA4E1BAC0BDB20A0EA068350F /* Support Files */,
+			);
+			name = PlaidClient;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		350B2A83ADB21E8B5C8222339C1B35DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6FB8E0B47D33B2560F615D45704F0F4F /* PlaidClient.bundle */,
+				AA9FF7E6AC1E3867CE1449BD808D5957 /* PlaidClient.framework */,
+				CEA19D44BE5F5FA1A6CFCC58B6C0EDB5 /* Pods_PlaidClient_Tests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		404A6B5FA4E1BAC0BDB20A0EA068350F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				FF30A63C3E57EA7FCFCEC7A6D3022155 /* Info.plist */,
+				BFE05BF8AAC67896ADFBD13876976D48 /* PlaidClient.modulemap */,
+				9A18D3DFE2B0E0A4E53592C0825F01E5 /* PlaidClient.xcconfig */,
+				DA97A4F533F6660C1677C608C36FF0A8 /* PlaidClient-dummy.m */,
+				9DDC7F5F82DB1FE38F6367E03A50DCDE /* PlaidClient-prefix.pch */,
+				6E66ADF7EEEBB306C39A05F97F7EE14E /* PlaidClient-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/PlaidClient";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
+				943992007BAB04A4D3C92C9213B36B78 /* Development Pods */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				350B2A83ADB21E8B5C8222339C1B35DB /* Products */,
+				EE613680044D79F4457650F66D3A0FB4 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		943992007BAB04A4D3C92C9213B36B78 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				31BBB64595C4EA8599250666ED8DA322 /* PlaidClient */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		B238F41D40D25EDA05220B58FEF8921A /* Pods-PlaidClient_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				67EE391C8B21846553D84FD72FC4E431 /* Info.plist */,
+				F6F8941629AD98F9EC01C72F8EAAA3FC /* Pods-PlaidClient_Tests.modulemap */,
+				3DFE1256F02A102831B88E4DF536B5EC /* Pods-PlaidClient_Tests-acknowledgements.markdown */,
+				433DA376395F2CD5F09B80AC8426A75C /* Pods-PlaidClient_Tests-acknowledgements.plist */,
+				2EC466A108A22B2FF2880E23A724EE71 /* Pods-PlaidClient_Tests-dummy.m */,
+				9603FC5CCB6E5FF526375CC87D8C5A5F /* Pods-PlaidClient_Tests-frameworks.sh */,
+				7865D6787EC0E05E1A82C7F6A73C068A /* Pods-PlaidClient_Tests-resources.sh */,
+				F3554DB61CEDAF6CD4BB44BF5A3AF6E9 /* Pods-PlaidClient_Tests-umbrella.h */,
+				6910C5455057D0942F43549FB7956B56 /* Pods-PlaidClient_Tests.debug.xcconfig */,
+				F239EB9145EB89804FFDE454D0E8CF08 /* Pods-PlaidClient_Tests.release.xcconfig */,
+			);
+			name = "Pods-PlaidClient_Tests";
+			path = "Target Support Files/Pods-PlaidClient_Tests";
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF6342C8B29F4CEEA088EFF7AB4DE362 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF6342C8B29F4CEEA088EFF7AB4DE362 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		D991644D386A8CB7193C65F893DBEC89 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4325AB3D1C54274500C68ED5 /* PlaidAccount.swift */,
+				4325AB3E1C54274500C68ED5 /* PlaidClient.h */,
+				4325AB3F1C54274500C68ED5 /* PlaidEnums.swift */,
+				4325AB401C54274500C68ED5 /* PlaidInstitution.swift */,
+				4325AB411C54274500C68ED5 /* PlaidSwiftClient.swift */,
+				4325AB421C54274500C68ED5 /* PlaidTransaction.swift */,
+				4325AB431C54274500C68ED5 /* PlaidURL.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		EE613680044D79F4457650F66D3A0FB4 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B238F41D40D25EDA05220B58FEF8921A /* Pods-PlaidClient_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D8A74EDA12740E076086F723BAF6F562 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4325AB451C54274500C68ED5 /* PlaidClient.h in Headers */,
+				BBDE711D9D7571DC8CAA6918DC40175B /* PlaidClient-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5B6B05F837DEF9A14DEFEB8DAA61857 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5A3690F4C53F6D3BC2CD940FD4C994C /* Pods-PlaidClient_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		22E5CB697E86FC3CD0B4D3B37918E976 /* PlaidClient-PlaidClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7D7575CC37819EA98B86638CAF0F0D4 /* Build configuration list for PBXNativeTarget "PlaidClient-PlaidClient" */;
+			buildPhases = (
+				469743D14133709626EC567C58222306 /* Sources */,
+				702AE4AE83B98C685006A2F7A4BCF4F4 /* Frameworks */,
+				9F68B5A09D3C8773A3E3E57A91A08BEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PlaidClient-PlaidClient";
+			productName = "PlaidClient-PlaidClient";
+			productReference = 6FB8E0B47D33B2560F615D45704F0F4F /* PlaidClient.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		815FE93575B7B1026543D0CC389EC56A /* Pods-PlaidClient_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69F3E5438D2EF0B90C4951AB54FCC7D1 /* Build configuration list for PBXNativeTarget "Pods-PlaidClient_Tests" */;
+			buildPhases = (
+				D850EE5E20BF0E4B8856BFEA177A9E5C /* Sources */,
+				76F628E237BDA1434F373D69458DA973 /* Frameworks */,
+				E5B6B05F837DEF9A14DEFEB8DAA61857 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8126811FDC0DA5F26557EEA2CCC8338A /* PBXTargetDependency */,
+			);
+			name = "Pods-PlaidClient_Tests";
+			productName = "Pods-PlaidClient_Tests";
+			productReference = CEA19D44BE5F5FA1A6CFCC58B6C0EDB5 /* Pods_PlaidClient_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		97BE0B83B5CB358D438197FB1EECC1FA /* PlaidClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0F800DA741023AB5E4A11AD8CDB4B9E /* Build configuration list for PBXNativeTarget "PlaidClient" */;
+			buildPhases = (
+				9EDCDF07D9E6E27793ADD68A0DB4A8F5 /* Sources */,
+				7844DEC99FD3B5B909C55C6062D2C9FD /* Frameworks */,
+				10A10087B0B6A23725E14866ED95E8D5 /* Resources */,
+				D8A74EDA12740E076086F723BAF6F562 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82744DC49700C533E1C80184742D93DF /* PBXTargetDependency */,
+			);
+			name = PlaidClient;
+			productName = PlaidClient;
+			productReference = AA9FF7E6AC1E3867CE1449BD808D5957 /* PlaidClient.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 350B2A83ADB21E8B5C8222339C1B35DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				97BE0B83B5CB358D438197FB1EECC1FA /* PlaidClient */,
+				22E5CB697E86FC3CD0B4D3B37918E976 /* PlaidClient-PlaidClient */,
+				815FE93575B7B1026543D0CC389EC56A /* Pods-PlaidClient_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		10A10087B0B6A23725E14866ED95E8D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36FB68501A507AA46B45307C348CE599 /* PlaidClient.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F68B5A09D3C8773A3E3E57A91A08BEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		469743D14133709626EC567C58222306 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EDCDF07D9E6E27793ADD68A0DB4A8F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4325AB461C54274500C68ED5 /* PlaidEnums.swift in Sources */,
+				4325AB481C54274500C68ED5 /* PlaidSwiftClient.swift in Sources */,
+				4325AB471C54274500C68ED5 /* PlaidInstitution.swift in Sources */,
+				4325AB4A1C54274500C68ED5 /* PlaidURL.swift in Sources */,
+				4325AB491C54274500C68ED5 /* PlaidTransaction.swift in Sources */,
+				4325AB441C54274500C68ED5 /* PlaidAccount.swift in Sources */,
+				C09897534B11A91AD088C7E697EA1592 /* PlaidClient-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D850EE5E20BF0E4B8856BFEA177A9E5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF58AE9CDD590C11F52271167C7798D7 /* Pods-PlaidClient_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8126811FDC0DA5F26557EEA2CCC8338A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PlaidClient;
+			target = 97BE0B83B5CB358D438197FB1EECC1FA /* PlaidClient */;
+			targetProxy = FB43A6DFB9CA0B9638923E7981587714 /* PBXContainerItemProxy */;
+		};
+		82744DC49700C533E1C80184742D93DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "PlaidClient-PlaidClient";
+			target = 22E5CB697E86FC3CD0B4D3B37918E976 /* PlaidClient-PlaidClient */;
+			targetProxy = 4974C4D4B64CF86C9B7940ACB82C164E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		05A3AC193E001B8846591B259684768B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6910C5455057D0942F43549FB7956B56 /* Pods-PlaidClient_Tests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PlaidClient_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PlaidClient_Tests/Pods-PlaidClient_Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_PlaidClient_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		10DE1947DAC0ED28F6C0A9F9BD75D546 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		552D02D5BA751AC2E8790D2811D496CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		5EEBE6CB5F97129508B7CB7F03DB033C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A18D3DFE2B0E0A4E53592C0825F01E5 /* PlaidClient.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/PlaidClient/PlaidClient-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PlaidClient/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PlaidClient/PlaidClient.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = PlaidClient;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		98A240F8640930E4BB5526B45B7F2015 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F239EB9145EB89804FFDE454D0E8CF08 /* Pods-PlaidClient_Tests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PlaidClient_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PlaidClient_Tests/Pods-PlaidClient_Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_PlaidClient_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B6BC16E6BEE1D1F2A1F2F84A0DF68B32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A18D3DFE2B0E0A4E53592C0825F01E5 /* PlaidClient.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				PRODUCT_NAME = PlaidClient;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		D80A09FCADBA17D3C07BFDADD2535F2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A18D3DFE2B0E0A4E53592C0825F01E5 /* PlaidClient.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				PRODUCT_NAME = PlaidClient;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		E5D49E1AB8D710CF00C0BA33314B8B81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A18D3DFE2B0E0A4E53592C0825F01E5 /* PlaidClient.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/PlaidClient/PlaidClient-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PlaidClient/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PlaidClient/PlaidClient.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = PlaidClient;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				552D02D5BA751AC2E8790D2811D496CA /* Debug */,
+				10DE1947DAC0ED28F6C0A9F9BD75D546 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		69F3E5438D2EF0B90C4951AB54FCC7D1 /* Build configuration list for PBXNativeTarget "Pods-PlaidClient_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A3AC193E001B8846591B259684768B /* Debug */,
+				98A240F8640930E4BB5526B45B7F2015 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7D7575CC37819EA98B86638CAF0F0D4 /* Build configuration list for PBXNativeTarget "PlaidClient-PlaidClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6BC16E6BEE1D1F2A1F2F84A0DF68B32 /* Debug */,
+				D80A09FCADBA17D3C07BFDADD2535F2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0F800DA741023AB5E4A11AD8CDB4B9E /* Build configuration list for PBXNativeTarget "PlaidClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5EEBE6CB5F97129508B7CB7F03DB033C /* Debug */,
+				E5D49E1AB8D710CF00C0BA33314B8B81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
