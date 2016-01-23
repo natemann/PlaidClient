@@ -22,8 +22,8 @@ struct PlaidSwiftClient {
     typealias JSON = [String : AnyObject]
     
     
-    //    MARK: Class Functions
-    
+    ///Fetches institutions from *Plaid*.
+    /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*.
     static func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
         Alamofire.request(.GET, PlaidURL.institutions).responseJSON { response in
             guard let institutions = response.result.value as? [JSON] else {
@@ -31,12 +31,16 @@ struct PlaidSwiftClient {
                 return
             }
             
-            let plaidInstitutions = institutions.map { PlaidInstitution(institution: $0) }.flatMap { $0 }
+            let plaidInstitutions = institutions.map { PlaidInstitution(institution: $0, source: .Plaid) }.flatMap { $0 }
             completionHandler(response: response.response, institutions: plaidInstitutions)
         }
     }
     
     
+    ///Fetches institutions from *Intuit*
+    /// - parameter count: The number of institutions to return.
+    /// - parameter skip:  The number of institutions to skip over.
+    /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*
     static func intuitInstitutions(count: Int, skip: Int, completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
         let parameters = ["client_id" : clientIDToken, "secret" : secretToken, "count" : String(count), "offset" : String(skip)]
         
@@ -45,12 +49,15 @@ struct PlaidSwiftClient {
                 completionHandler(response: nil, institutions: [])
                 return
             }
-            let intuitInstitutions = json.map { PlaidInstitution(institution: $0) }.flatMap { $0 }
+            print(json)
+            let intuitInstitutions = json.map { PlaidInstitution(institution: $0, source: .Intuit) }.flatMap { $0 }
             completionHandler(response: response.response, institutions: intuitInstitutions)
         }
     }
     
     
+    ///Fetches a *Plaid* instution with a specified ID.
+    /// - paramter id:
     static func plaidInstitutionWithID(id: String, callBack: (response: NSHTTPURLResponse?, institution: PlaidInstitution?) -> ()) {
         Alamofire.request(.GET, PlaidURL.institutions + "/\(id)").responseJSON { response in
 
@@ -58,13 +65,12 @@ struct PlaidSwiftClient {
                 callBack(response: response.response, institution: nil)
                 return
             }
-            
-            callBack(response: response.response, institution: PlaidInstitution(institution: institution))
+            callBack(response: response.response, institution: PlaidInstitution(institution: institution, source: .Plaid))
         }
     }
     
     
-    static func loginToInstitution(institution: PlaidInstitution, username: String, password: String, pin: String, email: String, callBack: (response: NSHTTPURLResponse?, responseData: JSON?) -> ()) {
+    static func loginToInstitution(institution: PlaidInstitution, username: String, password: String, pin: String, callBack: (response: NSHTTPURLResponse?, responseData: JSON?) -> ()) {
         
         let credentials = ["username" : username,
                            "password" : password,

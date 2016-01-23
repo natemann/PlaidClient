@@ -53,7 +53,7 @@ public struct PlaidInstitution {
     ///- institution: JSON formatted data of the institution fetched from *Plaid*
     ///- source: Specifies whether the institution was pulled directed from *Plaid* or *Intuit*
     public init?(institution: [String : AnyObject], source: Source) {
-        
+        print(institution)
         //Common attributes between Plaid accounts and Intuit accounts
         //If these attributes are not fullfilled, return nil
         
@@ -75,7 +75,14 @@ public struct PlaidInstitution {
         
         self.mfa         = institution["mfa"] as? [String] //This might be an optional field for intuit accounts.  All seem to have credentials though.
         self.url         = institution["url"] as? String
-        self.id          = institution["id"] as? String
+        
+        switch source {
+        case .Intuit:
+            self.id = institution["type"] as? String
+        case .Plaid:
+            self.id = institution["id"] as? String
+        }
+        
     }
 }
 

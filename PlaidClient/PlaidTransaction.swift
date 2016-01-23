@@ -19,7 +19,7 @@ public struct PlaidTransaction {
     public let pending:    Bool
     public let type:       [String : String]
     public let categoryID: String?
-    public let category:   [String]
+    public let category:   [String]?
     public let name:       String
     public let address:    String?
     public let city:       String?
@@ -42,7 +42,7 @@ public struct PlaidTransaction {
         pending    = transaction["pending"]! as! Bool
         type       = transaction["type"]! as! [String : String]
         categoryID = transaction["category_id"] as? String
-        category   = transaction["category"] as! [String]
+        category   = transaction["category"] as? [String]
         name       = transaction["name"]! as! String
         address    = location?["address"] as? String
         city       = location?["city"] as? String
