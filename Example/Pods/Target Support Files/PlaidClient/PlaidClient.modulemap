@@ -1,6 +1,0 @@
-framework module PlaidClient {
-  umbrella header "PlaidClient-umbrella.h"
-
-  export *
-  module * { export * }
-}
