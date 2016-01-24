@@ -24,6 +24,6 @@ Pod::Spec.new do |s|
 
 
   s.frameworks = 'UIKit'
-  s.dependency 'AFNetworking', '~> 3.0'
+  s.dependency 'Alamofire', '~> 3.0'
 
 end
