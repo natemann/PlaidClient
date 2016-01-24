@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nate. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum ResponseCode: Int {
     case Success       = 200

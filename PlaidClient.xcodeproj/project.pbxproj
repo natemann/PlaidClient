@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E5FAE23AA56CC2CD9E50F69 /* Pods_PlaidClientTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E79A8DE0692B941633DCED2 /* Pods_PlaidClientTests.framework */; };
+		3D9E9C533BDEB82071AD99E1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 628864F8B047A86380FCD4E4 /* Pods.framework */; };
 		4325AB5B1C545AD500C68ED5 /* PlaidClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4325AB5A1C545AD500C68ED5 /* PlaidClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4325AB621C545AD500C68ED5 /* PlaidClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4325AB571C545AD500C68ED5 /* PlaidClient.framework */; };
 		4325AB671C545AD500C68ED5 /* PlaidClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325AB661C545AD500C68ED5 /* PlaidClientTests.swift */; };
@@ -50,6 +51,7 @@
 		4389E44E1C545C0000CE5AB2 /* PlaidAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidAccount.swift; sourceTree = "<group>"; };
 		4389E4501C54693900CE5AB2 /* PlaidClient.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlaidClient.podspec; sourceTree = "<group>"; };
 		498DF68719BB623FAFB6730C /* Pods_PlaidClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlaidClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		628864F8B047A86380FCD4E4 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A225B2D03840A05A156A95A /* Pods-PlaidClientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlaidClientTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlaidClientTests/Pods-PlaidClientTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DDF82EA275BAC87185E2B6A /* Pods_PlaidClient.framework in Frameworks */,
+				3D9E9C533BDEB82071AD99E1 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +138,7 @@
 			children = (
 				498DF68719BB623FAFB6730C /* Pods_PlaidClient.framework */,
 				3E79A8DE0692B941633DCED2 /* Pods_PlaidClientTests.framework */,
+				628864F8B047A86380FCD4E4 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
