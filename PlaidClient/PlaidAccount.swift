@@ -67,14 +67,14 @@ public struct PlaidAccount {
         self.subType          = account["subType"] as? String
         
         if let current = balance["current"] as? Double {
-            self.currentBalance = type == "credit" ?  NSDecimalNumber(double: current) * -1 : NSDecimalNumber(double: current)
+            self.currentBalance = type == "credit" ?  NSDecimalNumber(double: current).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0)) : NSDecimalNumber(double: current)
         }
         else {
             self.currentBalance = nil
         }
         
         if let available = balance["availabe"] as? Double {
-            self.availableBalance = type == "credit" ?  NSDecimalNumber(double: available) * -1 : NSDecimalNumber(double: available)
+            self.availableBalance = type == "credit" ?  NSDecimalNumber(double: available).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0)) : NSDecimalNumber(double: available)
         }
         else {
             self.availableBalance = nil

@@ -37,7 +37,7 @@ public struct PlaidTransaction {
         account    = transaction["_account"]! as! String
         id         = transaction["_id"]! as! String
         pendingID  = transaction["_pendingTransaction"] as? String
-        amount     = NSDecimalNumber(double: transaction["amount"] as! Double).roundTo(2) * -1 //Plaid stores withdraws as positves and deposits as negatives
+        amount     = NSDecimalNumber(double: transaction["amount"] as! Double).roundTo(2).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0))//Plaid stores withdraws as positves and deposits as negatives
         date       = NSDateFormatter.dateFromString(transaction["date"]! as! String)
         pending    = transaction["pending"]! as! Bool
         type       = transaction["type"]! as! [String : String]

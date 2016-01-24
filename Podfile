@@ -4,13 +4,13 @@ use_frameworks!
 
 target 'PlaidClient' do
 
-# pod 'Alamofire', '~> 2.0’
+pod 'Alamofire', '~> 3.0’
 
 end
 
 target 'PlaidClientTests' do
 
-# pod 'Alamofire', '~> 2.0’
+pod 'Alamofire', '~> 3.0’
 
 end
 
