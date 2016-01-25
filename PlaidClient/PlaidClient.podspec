@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "PlaidClient"
-  s.version      = "0.1.0"
+  s.version      = "0.2.1"
   s.summary      = "A Swift library to interact with Plaid.com."
 
 
