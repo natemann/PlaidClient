@@ -22,14 +22,17 @@ public enum AccountInfoRetrevalError: ErrorType {
 public struct PlaidClient {
 
     ///Sign up at **Plaid.com** to receive a unique clienID
-    let clientIDToken: String
+    private let clientIDToken: String
     
     ///Sign up at **Plaid.com** to receive a unique secretToken
-    let secretToken:   String
+    private let secretToken: String
     
     typealias JSON = [String : AnyObject]
     
-    
+    public init(clientIDToken: String, secretToken: String) {
+        self.clientIDToken = clientIDToken
+        self.secretToken   = secretToken
+    }
     
     ///Fetches institutions from *Plaid*.
     /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*.
