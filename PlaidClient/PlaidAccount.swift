@@ -11,45 +11,45 @@ import UIKit
 public struct PlaidAccount {
     
     ///The name of the account.
-    let name: String?
+    public let name: String?
     
     ///The official name of the account.
-    let officialName: String?
+    public let officialName: String?
     
     ///The account sub-type.
-    let subType: String?
+    public let subType: String?
     
     ///The account type.
-    let type: String?
+    public let type: String?
     
     ///The account number.
-    let number: String?
+    public let number: String?
     
     ///The Plaid ID of the account.
-    let id: String?
+    public let id: String?
     
     ///The item string of the account.  Currently not sure what this is used for.
-    let item: String?
+    public let item: String?
     
     ///The user ID of the account.
-    let user: String?
+    public let user: String?
     
     ///The current account balance.  This balance only includes cleared transactions.
-    let currentBalance: NSDecimalNumber?
+    public let currentBalance: NSDecimalNumber?
     
     ///The available account balance.  The balance includes any pending transactions.
-    let availableBalance: NSDecimalNumber?
+    public let availableBalance: NSDecimalNumber?
     
     ///The type of the account.
-    let institutionType: String?
+    public let institutionType: String?
     
     //The account limit.  I believe this is only relevent to credit accounts.
-    let limit: NSDecimalNumber?
+    public let limit: NSDecimalNumber?
     
     
     ///- institution: JSON formatted data of the account fetched from *Plaid*
     ///- source: Specifies whether the account was pulled directed from *Plaid* or *Intuit*
-    init?(account: [String : AnyObject]) {
+    public init?(account: [String : AnyObject]) {
         guard let meta = account["meta"] as? [String: AnyObject],
             let balance = account["balance"] as? [String: AnyObject]
             else {

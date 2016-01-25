@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum ResponseCode: Int {
+public enum ResponseCode: Int {
     case Success       = 200
     case MFARequired   = 201
     case BadRequest    = 400
@@ -17,7 +17,7 @@ enum ResponseCode: Int {
     case CannotBeFound = 404
 }
 
-enum MFATypes: String {
+public enum MFATypes: String {
     case Questions = "questions"
     case Device    = "device"
 }

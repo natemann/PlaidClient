@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-enum AccountInfoRetrevalError: ErrorType {
+public enum AccountInfoRetrevalError: ErrorType {
     
     case Locked(accessToken: String)
     case NotConnected(accessToken: String)
@@ -19,7 +19,7 @@ enum AccountInfoRetrevalError: ErrorType {
 //Must sign up at Plaid.com to receive uniqu cliendIDToken and secretToken
 
 
-struct PlaidSwiftClient {
+public struct PlaidClient {
 
     ///Sign up at **Plaid.com** to receive a unique clienID
     let clientIDToken: String
@@ -34,6 +34,7 @@ struct PlaidSwiftClient {
     ///Fetches institutions from *Plaid*.
     /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*.
     func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
+        
         Alamofire.request(.GET, PlaidURL.institutions).responseJSON { response in
             guard let institutions = response.result.value as? [JSON] else {
                 completionHandler(response: nil, institutions: [])
@@ -212,9 +213,9 @@ struct PlaidSwiftClient {
 
 
 
-extension NSDateFormatter {
+public extension NSDateFormatter {
     
-    class var dateFormatter: NSDateFormatter {
+    public class var dateFormatter: NSDateFormatter {
         let dateFormatter = NSDateFormatter()
         
         dateFormatter.locale     = NSLocale(localeIdentifier: "en_US_PSIX")
@@ -224,12 +225,12 @@ extension NSDateFormatter {
     }
     
     
-    class func plaidDate(date date: NSDate) -> String {
+    public class func plaidDate(date date: NSDate) -> String {
         return dateFormatter.stringFromDate(date)
     }
     
     
-    class func dateFromString(string: String) -> NSDate {
+    public class func dateFromString(string: String) -> NSDate {
         return dateFormatter.dateFromString(string)!
     }
     

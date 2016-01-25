@@ -7,7 +7,7 @@
 //
 
 
-struct PlaidURL {
+public struct PlaidURL {
     
     static let baseURL      = "https://tartan.plaid.com"
     static let institutions = baseURL + "/institutions"

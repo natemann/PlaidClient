@@ -14,40 +14,40 @@ public struct PlaidInstitution {
     }
     
     ///The source of the data, either **Plaid** or **Intuit**.  Plaid supplies Intuit data through longtail access.
-    let source: Source
+    public let source: Source
     
     ///Institution specific description of *username* and *password*.
-    let credentials: [String : String]
+    public let credentials: [String : String]
     
     ///Boolean to determine if institution requires *Multi-Factor Authentication*.
-    let has_mfa: Bool
+    public let has_mfa: Bool
     
     ///The name of the institution.
-    let name: String
+    public let name: String
     
     ///For **Plaid** accounts, the *type* is a short-hand description of the institution.
     ///For **Intuit** accounts, the *type* is a unique identifier.
-    let type: String
+    public let type: String
     
     ///An array of *Multi-Factor Authentication* methods.
-    let mfa: [String]?
+    public let mfa: [String]?
     
     ///The type of connections allowed through *Plaid.com*.
-    let products: [String]
+    public let products: [String]
     
     
     ///The accessToken for the institution.  The field is created once the user has logged into the institution
-    var accessToken: String?
+    public var accessToken: String?
     
     /****** Properties Unique to Plaid Accounts ********/
     
     ///*Plaid* institution ID.  Only available for institutions directly from *Plaid*.
-    let id: String?
+    public let id: String?
     
     /******* Properties Unique to Intuit Accounts *********/
      
     ///The institution's website.  Only available for *Intuit* acounts.
-    let url: String?
+    public let url: String?
     
     
     ///- institution: JSON formatted data of the institution fetched from *Plaid*
