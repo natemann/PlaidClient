@@ -27,7 +27,7 @@ public struct PlaidClient {
     ///Sign up at **Plaid.com** to receive a unique secretToken
     private let secretToken: String
     
-    typealias JSON = [String : AnyObject]
+    public typealias JSON = [String : AnyObject]
     
     public init(clientIDToken: String, secretToken: String) {
         self.clientIDToken = clientIDToken
@@ -36,7 +36,7 @@ public struct PlaidClient {
     
     ///Fetches institutions from *Plaid*.
     /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*.
-    func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
+    public func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
         
         Alamofire.request(.GET, PlaidURL.institutions).responseJSON { response in
             guard let institutions = response.result.value as? [JSON] else {
@@ -54,7 +54,7 @@ public struct PlaidClient {
     /// - parameter count: The number of institutions to return.
     /// - parameter skip:  The number of institutions to skip over.
     /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*
-    func intuitInstitutions(count: Int, skip: Int, completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
+    public func intuitInstitutions(count: Int, skip: Int, completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
         let parameters = ["client_id" : clientIDToken, "secret" : secretToken, "count" : String(count), "offset" : String(skip)]
         
         Alamofire.request(.POST, PlaidURL.intuit, parameters: parameters, encoding: .JSON).responseJSON { response in
@@ -71,7 +71,7 @@ public struct PlaidClient {
     
     ///Fetches a *Plaid* instution with a specified ID.
     /// - parameter id: The institution's id given by **Plaid.com**
-    func plaidInstitutionWithID(id: String, callBack: (response: NSHTTPURLResponse?, institution: PlaidInstitution?) -> ()) {
+    public func plaidInstitutionWithID(id: String, callBack: (response: NSHTTPURLResponse?, institution: PlaidInstitution?) -> ()) {
         Alamofire.request(.GET, PlaidURL.institutions + "/\(id)").responseJSON { response in
 
             guard let institution = response.result.value as? JSON else {
@@ -87,7 +87,7 @@ public struct PlaidClient {
     /// - parameter username: The user's username for the institution.
     /// - parameter password: The user's password for the institution.
     /// - parameter pin: The user's pin for the institution (if required)
-    func loginToInstitution(institution: PlaidInstitution, username: String, password: String, pin: String, callBack: (response: NSHTTPURLResponse?, responseData: JSON?) -> ()) {
+    public func loginToInstitution(institution: PlaidInstitution, username: String, password: String, pin: String, callBack: (response: NSHTTPURLResponse?, responseData: JSON?) -> ()) {
         
         let credentials = ["username" : username,
                            "password" : password,
@@ -109,7 +109,7 @@ public struct PlaidClient {
     }
     
     
-   func submitMFAResponse(response: String, institution: PlaidInstitution, accessToken: String, callBack: (response: NSHTTPURLResponse?, responseData: JSON?) -> ()) {
+   public func submitMFAResponse(response: String, institution: PlaidInstitution, accessToken: String, callBack: (response: NSHTTPURLResponse?, responseData: JSON?) -> ()) {
                             
         let parameters: JSON = ["client_id" : clientIDToken,
                                    "secret" : secretToken,
@@ -128,7 +128,7 @@ public struct PlaidClient {
     }
     
     
-    func patchInstitution(accessToken: String, username: String, password: String, pin: String, callBack: (response: NSHTTPURLResponse?, data: JSON?) -> ()) {
+    public func patchInstitution(accessToken: String, username: String, password: String, pin: String, callBack: (response: NSHTTPURLResponse?, data: JSON?) -> ()) {
        
         let parameters = ["client_id" : clientIDToken,
                              "secret" : secretToken,
@@ -148,7 +148,7 @@ public struct PlaidClient {
     }
     
     
-    func patchSubmitMFAResponse(response: String, accessToken: String, username: String, password: String, callBack: (response: NSHTTPURLResponse?, data: JSON?) -> ()) {
+    public func patchSubmitMFAResponse(response: String, accessToken: String, username: String, password: String, callBack: (response: NSHTTPURLResponse?, data: JSON?) -> ()) {
         let parameters = ["client_id" : clientIDToken,
                              "secret" : secretToken,
 //                           "username" : username,
@@ -170,7 +170,7 @@ public struct PlaidClient {
     
     
     
-    func downloadAccountData(accessToken accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, callBack: (response: NSHTTPURLResponse?, account: PlaidAccount?, plaidTransactions: [PlaidTransaction]?, error: AccountInfoRetrevalError?) -> ()) {
+    public func downloadAccountData(accessToken accessToken: String, account: String, pending: Bool, fromDate: NSDate?, toDate: NSDate?, callBack: (response: NSHTTPURLResponse?, account: PlaidAccount?, plaidTransactions: [PlaidTransaction]?, error: AccountInfoRetrevalError?) -> ()) {
         var options: JSON = ["pending" : pending,
                              "account" : account]
         
