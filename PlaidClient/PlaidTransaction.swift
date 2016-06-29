@@ -28,17 +28,20 @@ public struct PlaidTransaction {
     public let latitude:   String?
     public let longitude:  String?
     
-    
     public init(transaction: [String : AnyObject]) {
+
         let meta        = transaction["meta"] as! [String : AnyObject]
         let location    = meta["location"] as? [String : AnyObject]
         let coordinates = location?["coordinates"] as? [String : AnyObject]
 
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+
         account    = transaction["_account"]! as! String
         id         = transaction["_id"]! as! String
         pendingID  = transaction["_pendingTransaction"] as? String
-        amount     = NSDecimalNumber(double: transaction["amount"] as! Double).roundTo(2).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0))//Plaid stores withdraws as positves and deposits as negatives
-        date       = NSDateFormatter.dateFromString(transaction["date"]! as! String)
+        amount     = NSDecimalNumber(double: transaction["amount"] as! Double).roundTo(2).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0)) //Plaid stores withdraws as positves and deposits as negatives
+        date       = formatter.dateFromString(transaction["date"] as! String)!
         pending    = transaction["pending"]! as! Bool
         type       = transaction["type"]! as! [String : String]
         categoryID = transaction["category_id"] as? String
@@ -65,21 +68,17 @@ public func ==(lhs: PlaidTransaction, rhs: PlaidTransaction) -> Bool {
 
 
 protocol Roundable {
-    func roundTo(places: Int16) -> NSDecimalNumber
+    func roundTo(_ places: Int16) -> NSDecimalNumber
     
 }
 
 
 
-extension Roundable where Self: NSDecimalNumber {
-    
-    func roundTo(places: Int16) -> NSDecimalNumber {
+
+extension NSDecimalNumber: Roundable {
+
+    func roundTo(_ places: Int16) -> NSDecimalNumber {
         return self.decimalNumberByRoundingAccordingToBehavior(NSDecimalNumberHandler(roundingMode: .RoundPlain, scale: places, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true))
     }
-    
 }
-
-
-
-extension NSDecimalNumber: Roundable { }
 
