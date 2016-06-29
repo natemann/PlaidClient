@@ -43,18 +43,13 @@ public struct PlaidAccount {
     ///The type of the account.
     public let institutionType: String?
     
-    //The account limit.  I believe this is only relevent to credit accounts.
+    ///The account limit. I believe this is only relevent to credit accounts.
     public let limit: NSDecimalNumber?
     
-    
-    ///- institution: JSON formatted data of the account fetched from *Plaid*
-    ///- source: Specifies whether the account was pulled directed from *Plaid* or *Intuit*
+
     public init?(account: [String : AnyObject]) {
         guard let meta = account["meta"] as? [String: AnyObject],
-            let balance = account["balance"] as? [String: AnyObject]
-            else {
-                return nil
-        }
+              let balance = account["balance"] as? [String: AnyObject] else { return nil }
         
         self.name             = meta["name"] as? String
         self.officialName     = account["official_name"] as? String
@@ -67,26 +62,27 @@ public struct PlaidAccount {
         self.subType          = account["subType"] as? String
         
         if let current = balance["current"] as? Double {
-            self.currentBalance = type == "credit" ?  NSDecimalNumber(double: current).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0)) : NSDecimalNumber(double: current)
+            self.currentBalance = type == "credit" ?  NSDecimalNumber(value: current).multiplying(by: NSDecimalNumber(value: -1.0)) : NSDecimalNumber(value: current)
         }
         else {
             self.currentBalance = nil
         }
         
-        if let available = balance["availabe"] as? Double {
-            self.availableBalance = type == "credit" ?  NSDecimalNumber(double: available).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0)) : NSDecimalNumber(double: available)
+        if let available = balance["available"] as? Double {
+            self.availableBalance = type == "credit" ?  NSDecimalNumber(value: available).multiplying(by: NSDecimalNumber(value: -1.0)) : NSDecimalNumber(value: available)
         }
         else {
             self.availableBalance = nil
         }
         
         if let limit = meta["limit"] as? Double {
-            self.limit = NSDecimalNumber(double: limit)
+            self.limit = NSDecimalNumber(value: limit)
         }
         else {
             self.limit = nil
         }
     }
+    
 }
 
 

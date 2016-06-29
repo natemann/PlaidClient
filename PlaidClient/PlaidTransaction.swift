@@ -15,7 +15,7 @@ public struct PlaidTransaction {
     public let id:         String
     public let pendingID:  String?
     public let amount:     NSDecimalNumber
-    public let date:       NSDate
+    public let date:       Date
     public let pending:    Bool
     public let type:       [String : String]
     public let categoryID: String?
@@ -34,14 +34,14 @@ public struct PlaidTransaction {
         let location    = meta["location"] as? [String : AnyObject]
         let coordinates = location?["coordinates"] as? [String : AnyObject]
 
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
 
         account    = transaction["_account"]! as! String
         id         = transaction["_id"]! as! String
         pendingID  = transaction["_pendingTransaction"] as? String
-        amount     = NSDecimalNumber(double: transaction["amount"] as! Double).roundTo(2).decimalNumberByMultiplyingBy(NSDecimalNumber(double: -1.0)) //Plaid stores withdraws as positves and deposits as negatives
-        date       = formatter.dateFromString(transaction["date"] as! String)!
+        amount     = NSDecimalNumber(value: transaction["amount"] as! Double).roundTo(2).multiplying(by: NSDecimalNumber(value: -1.0)) //Plaid stores withdraws as positves and deposits as negatives
+        date       = formatter.date(from: transaction["date"] as! String)!
         pending    = transaction["pending"]! as! Bool
         type       = transaction["type"]! as! [String : String]
         categoryID = transaction["category_id"] as? String
@@ -78,7 +78,7 @@ protocol Roundable {
 extension NSDecimalNumber: Roundable {
 
     func roundTo(_ places: Int16) -> NSDecimalNumber {
-        return self.decimalNumberByRoundingAccordingToBehavior(NSDecimalNumberHandler(roundingMode: .RoundPlain, scale: places, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true))
+        return self.rounding(accordingToBehavior: NSDecimalNumberHandler(roundingMode: .roundPlain, scale: places, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true))
     }
 }
 

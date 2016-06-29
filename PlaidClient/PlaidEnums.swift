@@ -10,12 +10,12 @@ import UIKit
 
 public enum ResponseCode: Int {
 
-    case Success       = 200
-    case MFARequired   = 201
-    case BadRequest    = 400
-    case Unauthorized  = 401
-    case RequestFailed = 402
-    case CannotBeFound = 404
+    case success       = 200
+    case mfaRequired   = 201
+    case badRequest    = 400
+    case unauthorized  = 401
+    case requestFailed = 402
+    case cannotBeFound = 404
 
 }
 
