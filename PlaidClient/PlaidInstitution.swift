@@ -10,7 +10,7 @@ public struct PlaidInstitution {
     
     ///Identifies where the institution was fetched from, either **Plaid** or **Intuit**.  Plaid supplies Intuit data through longtail access.
     public enum Source {
-        case Plaid, Intuit
+        case plaid, intuit
     }
     
     ///The source of the data, either **Plaid** or **Intuit**.  Plaid supplies Intuit data through longtail access.
@@ -77,9 +77,9 @@ public struct PlaidInstitution {
         self.url         = institution["url"] as? String
         
         switch source {
-        case .Intuit:
+        case .intuit:
             self.id = institution["type"] as? String
-        case .Plaid:
+        case .plaid:
             self.id = institution["id"] as? String
         }
         

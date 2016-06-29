@@ -7,12 +7,3 @@
 //
 
 
-public struct PlaidURL {
-    
-    static let baseURL      = "https://tartan.plaid.com"
-    static let institutions = baseURL + "/institutions"
-    static let intuit       = institutions + "/longtail"
-    static let connect      = baseURL + "/connect"
-    static let step         = connect + "/step"
-    
-}
