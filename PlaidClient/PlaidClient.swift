@@ -96,6 +96,7 @@ public struct PlaidClient {
                 completionHandler(response: nil, institutions: [])
                 return
             }
+            print(json)
             let intuitInstitutions = json.map { PlaidInstitution(institution: $0, source: .intuit) }.flatMap { $0 }
             completionHandler(response: response.response, institutions: intuitInstitutions)
         }
@@ -222,7 +223,7 @@ public struct PlaidClient {
                                                           "options" : options]
         
         Alamofire.request(.GET, plaidURL.connect, parameters: downloadCredentials).responseJSON { response in
-            print("RESPONSE GET:", response)
+            print(response)
             guard let data = response.result.value as? JSON else { return }
             
             if let code = data["code"] as? Int {
@@ -236,9 +237,8 @@ public struct PlaidClient {
                 }
             }
             
-            if let transactions = data["transactions"] as? [JSON],
-               let accounts = data["accounts"] as? [[String : AnyObject]],
-                let accountData = accounts.filter({ $0["_id"] as? String == account }).first {
+            if let transactions = data["transactions"] as? [JSON], accounts = data["accounts"] as? [[String : AnyObject]], accountData = accounts.first {
+                print(transactions)
                 let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
                 callBack(response: response.response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions, error: nil)
             }
