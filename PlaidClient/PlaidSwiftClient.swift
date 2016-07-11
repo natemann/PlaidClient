@@ -205,6 +205,7 @@ public struct PlaidClient {
             if let transactions = data["transactions"] as? [JSON], accounts = data["accounts"] as? [[String : AnyObject]], accountData = accounts.first {
                 let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
                 callBack(response: response.response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions, error: nil)
+                return
             }
             callBack(response: response.response!, account: nil, plaidTransactions: nil, error: nil)
         }
