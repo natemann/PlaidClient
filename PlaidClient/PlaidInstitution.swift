@@ -60,10 +60,7 @@ public struct PlaidInstitution {
             let has_mfa     = institution["has_mfa"] as? Int,
             let name        = institution["name"] as? String,
             let products    = institution["products"] as? [String],
-            let type        = institution["type"] as? String
-            else {
-                return nil
-        }
+            let type        = institution["type"] as? String else { return nil }
         
         self.source      = source
         self.credentials = credentials
@@ -71,7 +68,6 @@ public struct PlaidInstitution {
         self.name        = name
         self.products    = products
         self.type        = type
-        
         self.mfa         = institution["mfa"] as? [String] //This might be an optional field for intuit accounts.  All seem to have credentials though.
         self.url         = institution["url"] as? String
         
@@ -81,8 +77,8 @@ public struct PlaidInstitution {
         case .plaid:
             self.id = institution["id"] as? String
         }
-        
     }
+
 }
 
 
