@@ -74,11 +74,15 @@ public struct PlaidClient {
 
         var request = URLRequest(url: plaidURL.institutions)
         request.httpMethod = "GET"
-
         session.dataTask(with: request) { data, response, error in
-            let institutions = self.decode(data: data)?.flatMap { PlaidInstitution(institution: $0, source: .plaid) }
-            completion(response: response, institutions: institutions, error: error)
-
+            do {
+                if let data = data,
+                    let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? [JSON] {
+                    completion(response: response, institutions: json.flatMap { PlaidInstitution(institution: $0, source: .plaid) }, error: error)
+                }
+            } catch {
+                print("Error fetching Plaid institutions: \(error)")
+            }
         }.resume()
     }
     
@@ -88,53 +92,63 @@ public struct PlaidClient {
     /// - parameter skip: The number of institutions to skip over.
     /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*
     public func intuitInstitutions(session: URLSession = URLSession.shared(), count: Int, skip: Int, completion: (response: URLResponse?, institutions: [PlaidInstitution]?, error: NSError?) -> ()) {
-//        let parameters = ["client_id" : clientIDToken, "secret" : secretToken, "count" : String(count), "offset" : String(skip)]
-
-        let url = String(plaidURL.intuit)+("?client_id=\(clientIDToken)&secret=\(secretToken)&count=\(String(count))&offset=\(String(skip))")
-
-        let test = URL(string: url)!
-
-        var request = URLRequest(url: test)
+        
+        let url = URL(string: String(plaidURL.intuit)+("?client_id=\(clientIDToken)&secret=\(secretToken)&count=\(String(count))&offset=\(String(skip))"))!
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
         session.dataTask(with: request) { data, response, error in
-            let institutions = self.decode(data: data)?.flatMap { PlaidInstitution(institution: $0, source: .intuit) }
-            completion(response: response, institutions: institutions, error: error)
+            do {
+                if let data = data,
+                   let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? JSON,
+                   let institutions = json["results"] as? [JSON] {
+                    completion(response: response, institutions: institutions.flatMap { PlaidInstitution(institution: $0, source: .intuit) }, error: error)
+                }
+            } catch {
+                print("Error fetching Intuit Institutions: \(error)")
+            }
+
         }.resume()
     }
 
 
 
 
-//    ///Fetches a *Plaid* instution with a specified ID.
-//    /// - parameter id: The institution's id given by **Plaid.com**
-//    public func plaidInstitutionWithID(id: String, callBack: (response: HTTPURLResponse?, institution: PlaidInstitution?) -> ()) {
-//        Alamofire.request(.GET, plaidURL.institutions + "/\(id)").responseJSON { response in
-//
-//            guard let institution = response.result.value as? JSON else {
-//                callBack(response: response.response, institution: nil)
-//                return
-//            }
-//            callBack(response: response.response, institution: PlaidInstitution(institution: institution, source: .plaid))
-//        }
-//    }
-//    
-//    ///Logs in to a financial institutions
-//    /// - parameter institution: A *PlaidInstitution* object
-//    /// - parameter username: The user's username for the institution.
-//    /// - parameter password: The user's password for the institution.
-//    /// - parameter pin: The user's pin for the institution (if required)
-//    public func loginToInstitution(_ institution: PlaidInstitution, username: String, password: String, pin: String, callBack: (response:HTTPURLResponse?, responseData: JSON?) -> ()) {
-//        
-//        let credentials = ["username" : username,
-//                           "password" : password,
-//                                "pin" : pin]
-//        
-//        let parameters: JSON = ["client_id" : clientIDToken,
-//                                   "secret" : secretToken,
-//                              "credentials" : credentials,
-//                                     "type" : institution.type]
-//        
+    ///Fetches a *Plaid* instution with a specified ID.
+    /// - parameter id: The institution's id given by **Plaid.com**
+    public func plaidInstitutionWithID(session: URLSession = URLSession.shared(), id: String, completion: (response: URLResponse?, institution: PlaidInstitution?, error: NSError?) -> ()) {
+
+        let url = try! plaidURL.institutions.appendingPathComponent("/\(id)")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        session.dataTask(with: request) { data, response, error in
+            do {
+                if let data = data,
+                    let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? JSON {
+                    completion(response: response, institution: PlaidInstitution(institution: json, source: .plaid), error: error)
+                }
+            } catch {
+                print("Error fetching Plaid institution with id: \(id). \(error)")
+            }
+        }.resume()
+    }
+
+
+    ///Logs in to a financial institutions
+    /// - parameter institution: A *PlaidInstitution* object
+    /// - parameter username: The user's username for the institution.
+    /// - parameter password: The user's password for the institution.
+    /// - parameter pin: The user's pin for the institution (if required)
+    public func loginToInstitution(_ institution: PlaidInstitution, username: String, password: String, pin: String, callBack: (response:HTTPURLResponse?, responseData: JSON?) -> ()) {
+        
+        let credentials = ["username" : username, "password" : password, "pin" : pin]
+        
+        let parameters: JSON = ["client_id" : clientIDToken,
+                                   "secret" : secretToken,
+                              "credentials" : credentials,
+                                     "type" : institution.type]
+        
 //        Alamofire.request(.POST, plaidURL.connect, parameters: parameters, encoding: .json).responseJSON { response in
 //            guard let responseObject = response.result.value as? JSON else {
 //                callBack(response: response.response, responseData: nil)
@@ -143,8 +157,8 @@ public struct PlaidClient {
 //            
 //            callBack(response: response.response, responseData: responseObject)
 //        }
-//    }
-//    
+    }
+//
 //    
 //    public func submitMFAResponse(_ type: MFAType, response: String, institution: PlaidInstitution, accessToken: String, callBack: (response:HTTPURLResponse?, responseData: JSON?, error: NSError?) -> ()) {
 //                            
@@ -249,19 +263,6 @@ public struct PlaidClient {
 //        }
 //    }
 
-
-    private func decode(data: Data?) -> [[String : AnyObject]]? {
-        guard let data = data else { return nil }
-
-        do {
-            let test = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? [String : AnyObject]
-            print("TEST: ", test?["results"])
-            return try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? [[String : AnyObject]]
-        } catch {
-            print("Error decoding data to json. \(error)")
-        }
-        return nil
-    }
 }
 
 
