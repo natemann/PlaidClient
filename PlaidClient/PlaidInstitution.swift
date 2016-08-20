@@ -8,12 +8,12 @@
 
 public struct PlaidInstitution {
     
-    ///Identifies where the institution was fetched from, either **Plaid** or **Intuit**.  Plaid supplies Intuit data through longtail access.
+    ///Identifies where the institution was fetched from, either **Plaid** or **Intuit**. Plaid supplies Intuit data through longtail access.
     public enum Source {
         case plaid, intuit
     }
     
-    ///The source of the data, either **Plaid** or **Intuit**.  Plaid supplies Intuit data through longtail access.
+    ///The source of the data, either **Plaid** or **Intuit**. Plaid supplies Intuit data through longtail access.
     public let source: Source
     
     ///Institution specific description of *username* and *password*.
