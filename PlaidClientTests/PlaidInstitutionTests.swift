@@ -105,7 +105,7 @@ class PlaidClientTests: XCTestCase {
     func test_institution_with_id() {
         let testExpectation = expectation(withDescription: "fetching Bank Of America Institution")
 
-        plaidClient.plaidInstitutionWithID(id: "5301a93ac140de84910000e0") { response, institution, error in
+        plaidClient.plaidInstitution(withID: "5301a93ac140de84910000e0") { response, institution, error in
             XCTAssertEqual(institution?.name, "Bank of America")
             testExpectation.fulfill()
         }

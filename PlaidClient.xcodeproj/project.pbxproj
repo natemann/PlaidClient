@@ -16,6 +16,8 @@
 		4389E44C1C545BF900CE5AB2 /* PlaidTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389E4471C545BF900CE5AB2 /* PlaidTransaction.swift */; };
 		4389E44F1C545C0000CE5AB2 /* PlaidAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389E44E1C545C0000CE5AB2 /* PlaidAccount.swift */; };
 		43D4F8651D236C620065D050 /* IntuitInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4F8641D236C620065D050 /* IntuitInstitutionTests.swift */; };
+		43F4EF3F1D61159900B34806 /* PlaidURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F4EF3E1D61159900B34806 /* PlaidURL.swift */; };
+		43F4EF411D61170D00B34806 /* PlaidURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F4EF401D61170D00B34806 /* PlaidURLTests.swift */; };
 		4F81B4CDB9B80190E090AC16 /* Pods_PlaidClientTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6765243EDE34DE1E6EE1E200 /* Pods_PlaidClientTests.framework */; };
 		D23650E882911A83FEEBAA6A /* Pods_PlaidClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCF711F6B4E350EA414490A /* Pods_PlaidClient.framework */; };
 /* End PBXBuildFile section */
@@ -43,6 +45,8 @@
 		4389E4471C545BF900CE5AB2 /* PlaidTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidTransaction.swift; sourceTree = "<group>"; };
 		4389E44E1C545C0000CE5AB2 /* PlaidAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidAccount.swift; sourceTree = "<group>"; };
 		43D4F8641D236C620065D050 /* IntuitInstitutionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntuitInstitutionTests.swift; sourceTree = "<group>"; };
+		43F4EF3E1D61159900B34806 /* PlaidURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidURL.swift; sourceTree = "<group>"; };
+		43F4EF401D61170D00B34806 /* PlaidURLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaidURLTests.swift; sourceTree = "<group>"; };
 		477C6E89B611B41CF6FF8DB5 /* Pods-PlaidClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlaidClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlaidClient/Pods-PlaidClient.release.xcconfig"; sourceTree = "<group>"; };
 		628864F8B047A86380FCD4E4 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6765243EDE34DE1E6EE1E200 /* Pods_PlaidClientTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlaidClientTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +107,7 @@
 				4389E4461C545BF900CE5AB2 /* PlaidClient.swift */,
 				4389E4471C545BF900CE5AB2 /* PlaidTransaction.swift */,
 				4325AB5C1C545AD500C68ED5 /* Info.plist */,
+				43F4EF3E1D61159900B34806 /* PlaidURL.swift */,
 			);
 			path = PlaidClient;
 			sourceTree = "<group>";
@@ -113,6 +118,7 @@
 				4325AB681C545AD500C68ED5 /* Info.plist */,
 				4325AB661C545AD500C68ED5 /* PlaidInstitutionTests.swift */,
 				43D4F8641D236C620065D050 /* IntuitInstitutionTests.swift */,
+				43F4EF401D61170D00B34806 /* PlaidURLTests.swift */,
 			);
 			path = PlaidClientTests;
 			sourceTree = "<group>";
@@ -413,6 +419,7 @@
 			files = (
 				4389E44B1C545BF900CE5AB2 /* PlaidClient.swift in Sources */,
 				4389E44C1C545BF900CE5AB2 /* PlaidTransaction.swift in Sources */,
+				43F4EF3F1D61159900B34806 /* PlaidURL.swift in Sources */,
 				4389E4491C545BF900CE5AB2 /* PlaidEnums.swift in Sources */,
 				4389E44F1C545C0000CE5AB2 /* PlaidAccount.swift in Sources */,
 				4389E44A1C545BF900CE5AB2 /* PlaidInstitution.swift in Sources */,
@@ -423,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43F4EF411D61170D00B34806 /* PlaidURLTests.swift in Sources */,
 				4325AB671C545AD500C68ED5 /* PlaidInstitutionTests.swift in Sources */,
 				43D4F8651D236C620065D050 /* IntuitInstitutionTests.swift in Sources */,
 			);
