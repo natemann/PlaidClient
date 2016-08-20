@@ -8,8 +8,6 @@
 
 import UIKit
 
-//Must sign up at Plaid.com to receive unique cliendIDToken and secretToken
-
 
 public enum AccountInfoRetrevalError: ErrorProtocol {
     
@@ -26,25 +24,6 @@ public enum Environment {
 }
 
 
-public struct PlaidURL {
-
-    init(environment: Environment) {
-        switch environment {
-        case .development:
-            baseURL = URL(string: "https://tartan.plaid.com")!
-        case .production:
-            baseURL = URL(string: "https://api.plaid.com")!
-        }
-    }
-
-    let baseURL: URL
-
-    var institutions: URL { return try! baseURL.appendingPathComponent("/institutions") }
-    var intuit: URL { return try! institutions.appendingPathComponent("/longtail") }
-    var connect: URL { return try! baseURL.appendingPathComponent("/connect") }
-    var step: URL { return try! connect.appendingPathComponent("/step") }
-
-}
 
 
 
@@ -71,66 +50,40 @@ public struct PlaidClient {
     ///Fetches institutions from *Plaid*.
     /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*.
     public func plaidInstitutions(session: URLSession = URLSession.shared(), completion: (response: URLResponse?, institutions: [PlaidInstitution]?, error: NSError?) -> Void) {
-
-        var request = URLRequest(url: plaidURL.institutions)
-        request.httpMethod = "GET"
-        session.dataTask(with: request) { data, response, error in
-            do {
-                if let data = data,
-                    let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? [JSON] {
-                    completion(response: response, institutions: json.flatMap { PlaidInstitution(institution: $0, source: .plaid) }, error: error)
-                }
-            } catch {
-                print("Error fetching Plaid institutions: \(error)")
-            }
+        session.dataTask(with: plaidURL.institutions()) { data, response, error in
+            let json = self.decode(data: data) as? [JSON]
+            completion(response: response, institutions: json?.flatMap { PlaidInstitution(institution: $0, source: .plaid) }, error: error)
         }.resume()
     }
-    
+
     
     ///Fetches institutions from *Intuit*
     /// - parameter count: The number of institutions to return.
     /// - parameter skip: The number of institutions to skip over.
     /// - parameter completionHandler: returns a *NSHTTPURLResponse* and an Array of *PlaidInstitions*
-    public func intuitInstitutions(session: URLSession = URLSession.shared(), count: Int, skip: Int, completion: (response: URLResponse?, institutions: [PlaidInstitution]?, error: NSError?) -> ()) {
-        
-        let url = URL(string: String(plaidURL.intuit)+("?client_id=\(clientIDToken)&secret=\(secretToken)&count=\(String(count))&offset=\(String(skip))"))!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-
-        session.dataTask(with: request) { data, response, error in
-            do {
-                if let data = data,
-                   let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? JSON,
-                   let institutions = json["results"] as? [JSON] {
-                    completion(response: response, institutions: institutions.flatMap { PlaidInstitution(institution: $0, source: .intuit) }, error: error)
-                }
-            } catch {
-                print("Error fetching Intuit Institutions: \(error)")
-            }
-
+    public func intuitInstitutions(count: Int, skip: Int, session: URLSession = URLSession.shared(), completion: (response: URLResponse?, institutions: [PlaidInstitution]?, error: NSError?) -> ()) {
+        session.dataTask(with: plaidURL.intuit(clientID: clientIDToken, secret: secretToken, count: count, skip: skip)) { data, response,
+            
+            error in
+            print("DATA", data)
+            print(response)
+            print(error)
+            let json = self.decode(data: data) as? JSON
+            let institutions = json?["results"] as? [JSON]
+            completion(response: response, institutions: institutions?.flatMap { PlaidInstitution(institution: $0, source: .intuit) }, error: error)
         }.resume()
     }
 
 
-
-
     ///Fetches a *Plaid* instution with a specified ID.
     /// - parameter id: The institution's id given by **Plaid.com**
-    public func plaidInstitutionWithID(session: URLSession = URLSession.shared(), id: String, completion: (response: URLResponse?, institution: PlaidInstitution?, error: NSError?) -> ()) {
-
-        let url = try! plaidURL.institutions.appendingPathComponent("/\(id)")
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        session.dataTask(with: request) { data, response, error in
-            do {
-                if let data = data,
-                    let json = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? JSON {
-                    completion(response: response, institution: PlaidInstitution(institution: json, source: .plaid), error: error)
-                }
-            } catch {
-                print("Error fetching Plaid institution with id: \(id). \(error)")
+    public func plaidInstitution(withID id: String, session: URLSession = URLSession.shared(), completion: (response: URLResponse?, institution: PlaidInstitution?, error: NSError?) -> ()) {
+        session.dataTask(with: plaidURL.institutions(id: id)) { data, response, error in
+            if let json = self.decode(data: data) as? JSON {
+                completion(response: response, institution: PlaidInstitution(institution: json, source: .plaid), error: error)
+                return
             }
+            completion(response: response, institution: nil, error: error)
         }.resume()
     }
 
@@ -140,23 +93,10 @@ public struct PlaidClient {
     /// - parameter username: The user's username for the institution.
     /// - parameter password: The user's password for the institution.
     /// - parameter pin: The user's pin for the institution (if required)
-    public func loginToInstitution(_ institution: PlaidInstitution, username: String, password: String, pin: String, callBack: (response:HTTPURLResponse?, responseData: JSON?) -> ()) {
-        
-        let credentials = ["username" : username, "password" : password, "pin" : pin]
-        
-        let parameters: JSON = ["client_id" : clientIDToken,
-                                   "secret" : secretToken,
-                              "credentials" : credentials,
-                                     "type" : institution.type]
-        
-//        Alamofire.request(.POST, plaidURL.connect, parameters: parameters, encoding: .json).responseJSON { response in
-//            guard let responseObject = response.result.value as? JSON else {
-//                callBack(response: response.response, responseData: nil)
-//                return
-//            }
-//            
-//            callBack(response: response.response, responseData: responseObject)
-//        }
+    public func login(toInstitution institution: PlaidInstitution, username: String, password: String, pin: String? = nil, session: URLSession = URLSession.shared(), completion: (response:URLResponse?, responseData: JSON?, error: NSError?) -> ()) {
+        session.dataTask(with: plaidURL.connect(clientID: clientIDToken, secret: secretToken, institution: institution, username: username, password: password, pin: pin)) { data, response, error in
+            completion(response: response, responseData: self.decode(data: data) as? JSON, error: error)
+        }.resume()
     }
 //
 //    
@@ -262,6 +202,18 @@ public struct PlaidClient {
 //            callBack(response: response.response!, account: nil, plaidTransactions: nil, error: nil)
 //        }
 //    }
+
+
+    private func decode(data: Data?) -> AnyObject? {
+        do {
+            if let data = data {
+                return try JSONSerialization.jsonObject(with: data, options: [.mutableContainers])
+            }
+        } catch {
+            print("Could not decode Data: \(error)")
+        }
+        return nil
+    }
 
 }
 
