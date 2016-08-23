@@ -18,7 +18,6 @@ public enum AccountInfoRetrevalError: ErrorType {
 
 //Must sign up at Plaid.com to receive uniqu cliendIDToken and secretToken
 
-
 public struct PlaidClient {
 
     ///Sign up at **Plaid.com** to receive a unique clienID
@@ -27,11 +26,14 @@ public struct PlaidClient {
     ///Sign up at **Plaid.com** to receive a unique secretToken
     private let secretToken: String
     
+    public let environment: PlaidEnvironment
+    
     public typealias JSON = [String : AnyObject]
     
-    public init(clientIDToken: String, secretToken: String) {
+    public init(environment: PlaidEnvironment, clientIDToken: String, secretToken: String) {
         self.clientIDToken = clientIDToken
         self.secretToken   = secretToken
+        self.environment = environment
     }
     
     ///Fetches institutions from *Plaid*.
@@ -39,7 +41,7 @@ public struct PlaidClient {
     public func plaidInstitutions(completionHandler: (response: NSHTTPURLResponse?, institutions: [PlaidInstitution]) -> ()) {
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         
-        Alamofire.request(.GET, PlaidURL.institutions).responseJSON(queue: queue) { response in
+        Alamofire.request(.GET, environment.institutionsURL).responseJSON(queue: queue) { response in
             guard let institutions = response.result.value as? [JSON] else {
                 completionHandler(response: nil, institutions: [])
                 return
@@ -59,7 +61,7 @@ public struct PlaidClient {
         let parameters = ["client_id" : clientIDToken, "secret" : secretToken, "count" : String(count), "offset" : String(skip)]
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         
-        Alamofire.request(.POST, PlaidURL.intuit, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
+        Alamofire.request(.POST, environment.intuitURL, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
             guard let results = response.result.value as? [String : AnyObject], let json = results["results"] as? [JSON] else {
                 completionHandler(response: nil, institutions: [])
                 return
@@ -76,7 +78,7 @@ public struct PlaidClient {
     public func plaidInstitutionWithID(id: String, callBack: (response: NSHTTPURLResponse?, institution: PlaidInstitution?) -> ()) {
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         
-        Alamofire.request(.GET, PlaidURL.institutions + "/\(id)").responseJSON(queue: queue) { response in
+        Alamofire.request(.GET, environment.institutionsURL + "/\(id)").responseJSON(queue: queue) { response in
 
             guard let institution = response.result.value as? JSON else {
                 callBack(response: response.response, institution: nil)
@@ -104,7 +106,7 @@ public struct PlaidClient {
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         
-        Alamofire.request(.POST, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
+        Alamofire.request(.POST, environment.connectURL, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
             guard let responseObject = response.result.value as? JSON else {
                 callBack(response: response.response, responseData: nil)
                 return
@@ -124,7 +126,7 @@ public struct PlaidClient {
                                      "type" : institution.type]
     
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-        Alamofire.request(.POST, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
+        Alamofire.request(.POST, environment.stepURL, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
             guard let responseObject = response.result.value as? JSON else {
                 callBack(response: response.response, responseData: nil)
                 return
@@ -145,7 +147,7 @@ public struct PlaidClient {
                        "access_token" : accessToken]
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         
-        Alamofire.request(.PATCH, PlaidURL.connect, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
+        Alamofire.request(.PATCH, environment.connectURL, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
             guard let data = response.result.value as? JSON else {
                 callBack(response: response.response, data: nil)
                 return
@@ -167,7 +169,7 @@ public struct PlaidClient {
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         
-        Alamofire.request(.PATCH, PlaidURL.step, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
+        Alamofire.request(.PATCH, environment.stepURL, parameters: parameters, encoding: .JSON).responseJSON(queue: queue) { response in
             guard let data = response.result.value as? JSON else {
                 callBack(response: response.response, data: nil)
                 return
@@ -200,7 +202,7 @@ public struct PlaidClient {
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         
-        Alamofire.request(.GET, PlaidURL.connect, parameters: downloadCredentials).responseJSON(queue: queue) { response in
+        Alamofire.request(.GET, environment.connectURL, parameters: downloadCredentials).responseJSON(queue: queue) { response in
             
             guard let data = response.result.value as? JSON else { return }
             

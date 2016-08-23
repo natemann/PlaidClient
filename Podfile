@@ -5,13 +5,13 @@ podspec
 
 target 'PlaidClient' do
 
-# pod 'Alamofire', '~> 3.0’
+# pod 'Alamofire', '~> 3.4’
 
 end
 
 target 'PlaidClientTests' do
 
-# pod 'Alamofire', '~> 3.0’
+# pod 'Alamofire', '~> 3.4’
 
 end
 
