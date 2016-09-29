@@ -15,25 +15,25 @@ class IntuitInstitutionTests: XCTestCase {
 
     func test_source_is_correct() {
 
-//        let testExpectation = expectation(withDescription: "fetching Plaid Institutions")
-//
-//        plaidClient.intuitInstitutions(50000, skip: 0) { _, institutions in
-//
-//            print("Institution Count: \(institutions.count)")
-//            //Run test for each institution
-//            for institution in institutions {
-//
-//                //test source is correctly set to Plaid
-//                XCTAssertEqual(institution.source, PlaidInstitution.Source.intuit, "Source is not correct for institution: \(institution)")
-//            }
-//
-//            testExpectation.fulfill()
-//        }
-//        waitForExpectations(withTimeout: 10000000) { error in
-//            if let error = error {
-//                print("Fetching Intuit institutions took too long. \(error)")
-//            }
-//        }
+        let testExpectation = expectation(description: "fetching Plaid Institutions")
+
+        plaidClient.intuitInstitutions(count: 50000, skip: 0) { _, institutions, error in
+
+            print("Institution Count: \(institutions?.count)")
+            //Run test for each institution
+            for institution in institutions! {
+
+                //test source is correctly set to Plaid
+                XCTAssertEqual(institution.source, PlaidInstitution.Source.intuit, "Source is not correct for institution: \(institution)")
+            }
+
+            testExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 10000000) { error in
+            if let error = error {
+                print("Fetching Intuit institutions took too long. \(error)")
+            }
+        }
     }
 
 }

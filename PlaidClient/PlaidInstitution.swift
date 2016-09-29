@@ -52,7 +52,7 @@ public struct PlaidInstitution {
     
     ///- institution: JSON formatted data of the institution fetched from *Plaid*
     ///- source: Specifies whether the institution was pulled directed from *Plaid* or *Intuit*
-    public init?(institution: [String : AnyObject], source: Source) {
+    public init?(institution: [String : Any], source: Source) {
         //Common attributes between Plaid accounts and Intuit accounts
         //If these attributes are not fullfilled, return nil
         

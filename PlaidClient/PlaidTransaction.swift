@@ -78,7 +78,7 @@ protocol Roundable {
 extension NSDecimalNumber: Roundable {
 
     func roundTo(_ places: Int16) -> NSDecimalNumber {
-        return self.rounding(accordingToBehavior: NSDecimalNumberHandler(roundingMode: .roundPlain, scale: places, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true))
+        return self.rounding(accordingToBehavior: NSDecimalNumberHandler(roundingMode: .plain, scale: places, raiseOnExactness: true, raiseOnOverflow: true, raiseOnUnderflow: true,raiseOnDivideByZero: true))
     }
 }
 
