@@ -52,7 +52,11 @@ internal struct PlaidURL {
     }
 
 
-    func step(clientID: String, secret: String, institution: PlaidInstitution, username: String, password: String, pin: String? = nil, response) -> URLRequest
+    func step(clientID: String, secret: String, institution: PlaidInstitution, username: String, password: String, pin: String? = nil) -> URLRequest {
+        var urlRequest = connect(clientID: clientID, secret: secret, institution: institution, username: username, password: password)
+        urlRequest.url = urlRequest.url?.appendingPathComponent("/step")
+        return urlRequest
+    }
 //    var step: URL { return try! connect.appendingPathComponent("/step") }
 
 }
