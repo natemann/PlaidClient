@@ -47,9 +47,9 @@ public struct PlaidAccount {
     public let limit: NSDecimalNumber?
     
 
-    public init?(account: [String : AnyObject]) {
-        guard let meta = account["meta"] as? [String: AnyObject],
-              let balance = account["balance"] as? [String: AnyObject] else { return nil }
+    public init?(account: [String : Any]) {
+        guard let meta = account["meta"] as? [String: Any],
+              let balance = account["balance"] as? [String: Any] else { return nil }
         
         self.name             = meta["name"] as? String
         self.officialName     = account["official_name"] as? String

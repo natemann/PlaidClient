@@ -5,13 +5,13 @@ use_frameworks!
 
 target 'PlaidClient' do
 
-#     pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire', :branch => 'swift3'
+    pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire', ~> '4.0'
 
 end
 
 target 'PlaidClientTests' do
 
-#     pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire', :branch => 'swift3'
+    pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire', ~> '4.0'
 
 end
 

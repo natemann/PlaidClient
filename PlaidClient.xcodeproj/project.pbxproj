@@ -193,6 +193,7 @@
 				5F8FCD98F5F211C3C8CCF23F /* [CP] Copy Pods Resources */,
 				53DB4A35EA06686A1F952DAF /* 📦 Embed Pods Frameworks */,
 				2E9B635E09AC8F1B02C1AA40 /* 📦 Copy Pods Resources */,
+				C29F2F2989D0047620672776 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -380,6 +381,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PlaidClientTests/Pods-PlaidClientTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C29F2F2989D0047620672776 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PlaidClientTests/Pods-PlaidClientTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C53ECA9A5F7D5D6C09BA8007 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -484,7 +500,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -526,7 +542,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

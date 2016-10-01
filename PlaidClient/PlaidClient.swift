@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 
 public enum AccountInfoRetrevalError: Error {
@@ -104,101 +105,81 @@ public struct PlaidClient {
                                       "mfa" : response,
                              "access_token" : accessToken,
                                      "type" : institution.type]
+    }
 
-        Alamofire.request(.POST, plaidURL.step, parameters: parameters, encoding: .json).responseJSON { response in
+    
+    public func patchInstitution(accessToken: String, username: String, password: String, pin: String, callBack: @escaping (_ response:HTTPURLResponse?, _ data: JSON?) -> ()) {
+       
+        let parameters: Parameters = ["client_id" : clientIDToken,
+                             "secret" : secretToken,
+                           "username" : username,
+                           "password" : password,
+                                "pin" : pin,
+                       "access_token" : accessToken]
 
-            guard let responseObject = response.result.value as? JSON else {
-                callBack(response: response.response, responseData: nil, error: response.result.error)
-                return
-            }
-            
-            callBack(response: response.response, responseData: responseObject, error: nil)
+        Alamofire.request(plaidURL.baseURL + "/step", method: .patch, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            let data = response.result.value as? JSON
+            callBack(response.response, data)
         }
     }
-//
-//    
-//    public func patchInstitution(accessToken: String, username: String, password: String, pin: String, callBack: (response:HTTPURLResponse?, data: JSON?) -> ()) {
-//       
-//        let parameters = ["client_id" : clientIDToken,
-//                             "secret" : secretToken,
+    
+    
+    public func patchSubmitMFAResponse(response: String, accessToken: String, callBack: @escaping (_ response:HTTPURLResponse?, _ data: JSON?) -> ()) {
+        let parameters = ["client_id" : clientIDToken,
+                             "secret" : secretToken,
 //                           "username" : username,
 //                           "password" : password,
 //                                "pin" : pin,
-//                       "access_token" : accessToken]
-//        
-//        Alamofire.request(.PATCH, plaidURL.connect, parameters: parameters, encoding: .json).responseJSON { response in
-//            guard let data = response.result.value as? JSON else {
-//                callBack(response: response.response, data: nil)
-//                return
-//            }
-//            
-//            callBack(response: response.response, data: data)
-//        }
-//    }
-//    
-//    
-//    public func patchSubmitMFAResponse(response: String, accessToken: String, callBack: (response:HTTPURLResponse?, data: JSON?) -> ()) {
-//        let parameters = ["client_id" : clientIDToken,
-//                             "secret" : secretToken,
-////                           "username" : username,
-////                           "password" : password,
-////                                "pin" : pin,
-//                       "access_token" : accessToken,
-//                                "mfa" : response]
-//        Alamofire.request(.PATCH, plaidURL.step, parameters: parameters, encoding: .json).responseJSON { response in
-//            guard let data = response.result.value as? JSON else {
-//                callBack(response: response.response, data: nil)
-//                return
-//            }
-//            
-//            callBack(response: response.response, data: data)
-//        }
-//    }
-//    
-//    
-//    
-//    
-//    
-//    public func downloadAccountData(accessToken: String, account: String, pending: Bool, fromDate: Date?, toDate: Date?, callBack: (response: HTTPURLResponse?, account: PlaidAccount?, plaidTransactions: [PlaidTransaction]?, error: AccountInfoRetrevalError?) -> ()) {
-//        var options: JSON = ["pending" : pending,
-//                             "account" : account]
-//        
-//        if let fromDate = fromDate {
-//            options["gte"] = DateFormatter.plaidDate(fromDate)
-//        }
-//        
-//        if let toDate = toDate {
-//            options["lte"] = DateFormatter.plaidDate(toDate)
-//        }
-//        
-//        let downloadCredentials: [String: AnyObject] = ["client_id" : clientIDToken,
-//                                                           "secret" : secretToken,
-//                                                     "access_token" : accessToken,
-//                                                          "options" : options]
-//        
-//        Alamofire.request(.GET, plaidURL.connect, parameters: downloadCredentials).responseJSON { response in
-//            print(response)
-//            guard let data = response.result.value as? JSON else { return }
-//            
-//            if let code = data["code"] as? Int {
-//                switch code {
-//    
-//                    case 1200...1209:
-//                        callBack(response: response.response!, account: nil, plaidTransactions: nil, error: .notConnected(accessToken:accessToken))
-//                    
-//                    default:
-//                        return
-//                }
-//            }
-//            
-//            if let transactions = data["transactions"] as? [JSON], accounts = data["accounts"] as? [[String : AnyObject]], accountData = accounts.first {
-//                print(transactions)
-//                let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
-//                callBack(response: response.response!, account: PlaidAccount(account: accountData), plaidTransactions: plaidTransactions, error: nil)
-//            }
-//            callBack(response: response.response!, account: nil, plaidTransactions: nil, error: nil)
-//        }
-//    }
+                       "access_token" : accessToken,
+                                "mfa" : response]
+        Alamofire.request(plaidURL.baseURL + "/step", method: .patch, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            let data = response.result.value as? JSON
+            callBack(response.response, data)
+        }
+    }
+    
+    
+    
+    
+    
+    public func downloadAccountData(accessToken: String, account: String, pending: Bool, fromDate: Date?, toDate: Date?, callBack: @escaping (_ response: HTTPURLResponse?, _ account: PlaidAccount?, _ plaidTransactions: [PlaidTransaction]?, _ error: AccountInfoRetrevalError?) -> ()) {
+        var options: JSON = ["pending" : pending,
+                             "account" : account]
+        
+        if let fromDate = fromDate {
+            options["gte"] = DateFormatter.plaidDate(fromDate)
+        }
+        
+        if let toDate = toDate {
+            options["lte"] = DateFormatter.plaidDate(toDate)
+        }
+        
+        let downloadCredentials: [String: Any] = ["client_id" : clientIDToken,
+                                                           "secret" : secretToken,
+                                                     "access_token" : accessToken,
+                                                          "options" : options]
+        
+        Alamofire.request(plaidURL.baseURL + "/connect", parameters: downloadCredentials).responseJSON { response in
+            guard let data = response.result.value as? JSON else { return }
+            
+            if let code = data["code"] as? Int {
+                switch code {
+    
+                    case 1200...1209:
+                        callBack(response.response!, nil, nil, .notConnected(accessToken:accessToken))
+                    
+                    default:
+                        return
+                }
+            }
+            
+            if let transactions = data["transactions"] as? [JSON], let accounts = data["accounts"] as? [[String : Any]], let accountData = accounts.first {
+                let plaidTransactions = transactions.map { PlaidTransaction(transaction: $0) }
+                callBack(response.response!, PlaidAccount(account: accountData), plaidTransactions, nil)
+            }
+            callBack(response.response!, nil, nil, nil)
+        }
+    }
 
 
     private func decode(data: Data?) -> Any? {
