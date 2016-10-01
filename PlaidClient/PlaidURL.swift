@@ -34,9 +34,21 @@ internal struct PlaidURL {
 
 
     func intuit(clientID: String, secret: String, count: Int, skip: Int) -> URLRequest {
-        let url = baseURL + "/longtail?client_id=\(clientID)&secret=\(secret)&count=\(String(count))&offset=\(String(skip))"
+        let url = baseURL + "/institutions/longtail"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
+
+        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+
+        // JSON Body
+
+        let bodyObject = [
+            "client_id": "test_id",
+            "secret": "test_secret",
+            "count": "50000",
+            "offset": "0"
+        ]
+        request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
         return request
     }
 
@@ -57,6 +69,16 @@ internal struct PlaidURL {
         urlRequest.url = urlRequest.url?.appendingPathComponent("/step")
         return urlRequest
     }
-//    var step: URL { return try! connect.appendingPathComponent("/step") }
+
+
+    func mfaResponse(clientID: String, secret: String, institution: PlaidInstitution, accessToken: String, username: String, password: String, response: String) -> URLRequest {
+        var url = baseURL + "/step?mfa=\(response)?client_id=\(clientID)&secret=\(secret)&type=\(institution.type)&username=\(username)&password=\(password)&access_token=\(accessToken)"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        return request
+    }
 
 }
+
+
+

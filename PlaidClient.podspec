@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "PlaidClient"
-  s.version      = "0.2.3"
+  s.version      = "0.2.4"
   s.summary      = "A Swift library to interact with Plaid.com."
 
 
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.author           = { "Nate Mann" => "nathan.mann@me.com" }
   s.source           = { :git => "https://github.com/natemann/PlaidClient.git", :tag => "#{s.version}" }
 
-  s.ios.deployment_target = "8.0"
+  s.ios.deployment_target = "10.0"
 
   s.requires_arc = true
 
@@ -24,6 +24,6 @@ Pod::Spec.new do |s|
 
 
   s.frameworks = 'UIKit'
-  s.dependency 'Alamofire', '~> 3.0'
+  s.dependency 'Alamofire', '~> 4.0'
 
 end

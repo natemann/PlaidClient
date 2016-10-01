@@ -28,11 +28,11 @@ public struct PlaidTransaction {
     public let latitude:   String?
     public let longitude:  String?
     
-    public init(transaction: [String : AnyObject]) {
+    public init(transaction: [String : Any]) {
 
-        let meta        = transaction["meta"] as! [String : AnyObject]
-        let location    = meta["location"] as? [String : AnyObject]
-        let coordinates = location?["coordinates"] as? [String : AnyObject]
+        let meta        = transaction["meta"] as! [String : Any]
+        let location    = meta["location"] as? [String : Any]
+        let coordinates = location?["coordinates"] as? [String : Any]
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
