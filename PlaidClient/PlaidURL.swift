@@ -43,10 +43,10 @@ internal struct PlaidURL {
         // JSON Body
 
         let bodyObject = [
-            "client_id": "test_id",
-            "secret": "test_secret",
-            "count": "50000",
-            "offset": "0"
+            "client_id": clientID,
+            "secret": secret,
+            "count": "\(count)",
+            "offset": "\(skip)"
         ]
         request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
         return request
@@ -71,10 +71,19 @@ internal struct PlaidURL {
     }
 
 
-    func mfaResponse(clientID: String, secret: String, institution: PlaidInstitution, accessToken: String, username: String, password: String, response: String) -> URLRequest {
-        var url = baseURL + "/step?mfa=\(response)?client_id=\(clientID)&secret=\(secret)&type=\(institution.type)&username=\(username)&password=\(password)&access_token=\(accessToken)"
+    func mfaResponse(clientID: String, secret: String, institution: PlaidInstitution, accessToken: String, response: String) -> URLRequest {
+        let url = baseURL + "/connect/step"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
+        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+
+        let bodyObject = ["client_id"    : "test_id",
+                          "secret"       : "test_secret",
+                          "mfa"          : response,
+                          "type"         : institution.type,
+                          "access_token" : accessToken]
+
+        request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
         return request
     }
 
