@@ -34,46 +34,44 @@ internal struct PlaidURL {
 
 
     func intuit(clientID: String, secret: String, count: Int, skip: Int) -> URLRequest {
-        let url = baseURL + "/institutions/longtail"
-        var request = URLRequest(url: URL(string: url)!)
+        var request = URLRequest(url: URL(string: baseURL + "/institutions/longtail")!)
         request.httpMethod = "POST"
-
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
 
-        // JSON Body
+        let bodyObject = ["client_id" : clientID,
+                          "secret"    : secret,
+                          "count"     : "\(count)",
+                          "offset"    : "\(skip)"]
 
-        let bodyObject = [
-            "client_id": clientID,
-            "secret": secret,
-            "count": "\(count)",
-            "offset": "\(skip)"
-        ]
         request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
         return request
     }
 
 
     func connect(clientID: String, secret: String, institution: PlaidInstitution, username: String, password: String, pin: String? = nil) -> URLRequest {
-        var url = baseURL + "/connect?client_id=\(clientID)&secret=\(secret)&type=\(institution.type)&username=\(username)&password=\(password)"
-        if let pin = pin {
-            url += "&pin=\(pin)"
-        }
-        var request = URLRequest(url: URL(string: url)!)
+        var request = URLRequest(url: URL(string: baseURL + "/connect")!)
         request.httpMethod = "POST"
+        let bodyObject = ["client_id" : clientID,
+                          "secret"    : secret,
+                          "type"      : institution.type,
+                          "username"  : username,
+                          "password"  : password,
+                          "pin"       : pin ?? "0"]
+
+        request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
         return request
     }
 
 
     func step(clientID: String, secret: String, institution: PlaidInstitution, username: String, password: String, pin: String? = nil) -> URLRequest {
-        var urlRequest = connect(clientID: clientID, secret: secret, institution: institution, username: username, password: password)
-        urlRequest.url = urlRequest.url?.appendingPathComponent("/step")
-        return urlRequest
+        var request = connect(clientID: clientID, secret: secret, institution: institution, username: username, password: password)
+        request.url = request.url?.appendingPathComponent("/step")
+        return request
     }
 
 
     func mfaResponse(clientID: String, secret: String, institution: PlaidInstitution, accessToken: String, response: String) -> URLRequest {
-        let url = baseURL + "/connect/step"
-        var request = URLRequest(url: URL(string: url)!)
+        var request = URLRequest(url: URL(string: baseURL + "/connect/step")!)
         request.httpMethod = "POST"
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
 
