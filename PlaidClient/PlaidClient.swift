@@ -91,20 +91,18 @@ public struct PlaidClient {
     /// - parameter pin: The user's pin for the institution (if required)
     public func login(toInstitution institution: PlaidInstitution, username: String, password: String, pin: String? = nil, session: URLSession = URLSession.shared, completion: @escaping (_ response: URLResponse?, _ responseData: JSON?, _ error: NSError?) -> ()) {
         let url = plaidURL.connect(clientID: clientIDToken, secret: secretToken, institution: institution, username: username, password: password)
-        print(url)
         session.dataTask(with: plaidURL.connect(clientID: clientIDToken, secret: secretToken, institution: institution, username: username, password: password)) { (data, response, error) in
             completion(response, self.decode(data: data) as? JSON, error as NSError?)
         }.resume()
     }
 
     
-    public func submitMFAResponse(_ type: MFAType, response: String, institution: PlaidInstitution, accessToken: String, callBack: (_ response: HTTPURLResponse?, _ responseData: JSON?, _ error: NSError?) -> ()) {
-                            
-        let parameters: JSON = ["client_id" : clientIDToken,
-                                   "secret" : secretToken,
-                                      "mfa" : response,
-                             "access_token" : accessToken,
-                                     "type" : institution.type]
+    public func submitMFAResponse(response: String, institution: PlaidInstitution, accessToken: String, session: URLSession = URLSession.shared, completion: @escaping (_ response: URLResponse?, _ responseData: JSON?, _ error: NSError?) -> ()) {
+
+        let urlRequest = plaidURL.mfaResponse(clientID: clientIDToken, secret: secretToken, institution: institution, accessToken: accessToken, response: response)
+        session.dataTask(with: urlRequest) { (data, response, error) in
+            completion(response, self.decode(data: data) as? JSON, error as NSError?)
+        }.resume()
     }
 
     
