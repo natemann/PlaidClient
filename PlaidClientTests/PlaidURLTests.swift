@@ -14,7 +14,7 @@ class PlaidURLTests: XCTestCase {
 
     let plaidURL = PlaidURL(environment: .development)
 
-    func testDevelopementBaseURL() {
+    func testDevelopmentBaseURL() {
         XCTAssertEqual(plaidURL.baseURL, "https://tartan.plaid.com")
     }
 
@@ -40,7 +40,7 @@ class PlaidURLTests: XCTestCase {
 
 
     func testIntuitURL() {
-        XCTAssertEqual(plaidURL.intuit(clientID: "clientID", secret: "secret", count: 1, skip: 1).url?.absoluteString, "https://tartan.plaid.com/longtail?client_id=clientID&secret=secret&count=1&offset=1")
+        XCTAssertEqual(plaidURL.intuit(clientID: "clientID", secret: "secret", count: 1, skip: 1).url?.absoluteString, "https://tartan.plaid.com/institutions/longtail")
     }
 
 
