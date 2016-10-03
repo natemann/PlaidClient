@@ -34,23 +34,18 @@ internal struct PlaidURL {
 
 
     func intuit(clientID: String, secret: String, count: Int, skip: Int) -> URLRequest {
-        var request = URLRequest(url: URL(string: baseURL + "/institutions/longtail")!)
-        request.httpMethod = "POST"
-        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
 
         let bodyObject = ["client_id" : clientID,
                           "secret"    : secret,
                           "count"     : "\(count)",
                           "offset"    : "\(skip)"]
 
-        request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
-        return request
+        return URLRequest("POST", url: URL(string: baseURL + "/institutions/longtail")!, body: bodyObject)
     }
 
 
     func connect(clientID: String, secret: String, institution: PlaidInstitution, username: String, password: String, pin: String? = nil) -> URLRequest {
-        var request = URLRequest(url: URL(string: baseURL + "/connect")!)
-        request.httpMethod = "POST"
+
         let bodyObject = ["client_id" : clientID,
                           "secret"    : secret,
                           "type"      : institution.type,
@@ -58,8 +53,7 @@ internal struct PlaidURL {
                           "password"  : password,
                           "pin"       : pin ?? "0"]
 
-        request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
-        return request
+        return URLRequest("POST", url: URL(string: baseURL + "/connect")!, body: bodyObject)
     }
 
 
@@ -71,9 +65,6 @@ internal struct PlaidURL {
 
 
     func mfaResponse(clientID: String, secret: String, institution: PlaidInstitution, accessToken: String, response: String) -> URLRequest {
-        var request = URLRequest(url: URL(string: baseURL + "/connect/step")!)
-        request.httpMethod = "POST"
-        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
 
         let bodyObject = ["client_id"    : "test_id",
                           "secret"       : "test_secret",
@@ -81,11 +72,76 @@ internal struct PlaidURL {
                           "type"         : institution.type,
                           "access_token" : accessToken]
 
-        request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
-        return request
+        return URLRequest("POST", url: URL(string: baseURL + "/connect/step")!, body: bodyObject)
+    }
+
+
+    func patchConnect(clientID: String, secret: String, accessToken: String, username: String, password: String, pin: String? = nil) -> URLRequest {
+
+        let bodyObject = ["client_id"    : clientID,
+                          "secret"       : secret,
+                          "access_token" : accessToken,
+                          "username"     : username,
+                          "password"     : password,
+                          "pin"          : pin ?? "0"]
+
+        return URLRequest("PATCH", url: URL(string: baseURL + "/connect")!, body: bodyObject)
+
+    }
+
+
+    func patchMFAResponse(clientID: String, secret: String, accessToken: String, response: String) -> URLRequest {
+
+        let bodyObject = ["client_id"    : "test_id",
+                          "secret"       : "test_secret",
+                          "mfa"          : response,
+                          "access_token" : accessToken]
+
+        return URLRequest("PATCH", url: URL(string: baseURL + "/connect/step")!, body: bodyObject)
+    }
+
+
+    func transactions(clientID: String, secret: String, accessToken: String, accountID: String?, pending: Bool?, fromDate: Date?, toDate: Date?) -> URLRequest {
+
+        var options: [String : Any] = [:]
+
+        if let accountID = accountID {
+            options["account"] = accountID
+        }
+
+        if let pending = pending {
+            options["pending"] = pending
+        }
+
+        if let fromDate = fromDate {
+            options["gte"] = DateFormatter.plaidDate(fromDate)
+        }
+
+        if let toDate = toDate {
+            options["lte"] = DateFormatter.plaidDate(toDate)
+        }
+
+        let bodyObject: [String: Any] = ["client_id"    : clientID,
+                                         "secret"       : secret,
+                                         "access_token" : accessToken,
+                                         "options"      : options]
+
+        return URLRequest("POST", url: URL(string: baseURL + "/connect/get")!, body: bodyObject)
+    }
+}
+
+
+
+
+fileprivate extension URLRequest {
+
+    init(_ method: String, url: URL, body: [String : Any]) {
+        self.init(url: url)
+        self.httpMethod = method
+        self.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        self.httpBody = try! JSONSerialization.data(withJSONObject: body, options: [])
     }
 
 }
-
 
 

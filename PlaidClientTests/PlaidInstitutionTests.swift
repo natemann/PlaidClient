@@ -136,10 +136,71 @@ class PlaidClientTests: XCTestCase {
     }
 
 
-    func test_submit_mfa() {
-        let testExpectation = expectation(description: "Submitting MFA Response")
+    func test_mfa_response_question() {
+        let testExpectation = expectation(description: "Answering Bank Of America MFA Question")
 
-//        plaidClient
+        plaidClient.submitMFAResponse(response: "tomato", institution: PlaidInstitution(type: "bofa"), accessToken: "test_bofa") { (response, json, error) in
+            XCTAssertEqual(json?["access_token"] as? String, "test_bofa")
+            XCTAssertNotNil(json?["accounts"])
+            testExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 100000) { (error) in
+            if let error = error {
+                print("Answering Bank Of Amwerica MFA Questions did not work. \(error)")
+            }
+        }
+    }
+
+
+    func test_patch_institution() {
+        let testExpectation = expectation(description: "Patch Bank Of America Login")
+
+        plaidClient.patchInstitution(accessToken: "test_bofa", username: "plaid_test", password: "plaid_good") { (response, json, error) in
+            XCTAssertEqual(json!["type"] as! String, "questions")
+            XCTAssertEqual(json!["access_token"] as! String, "test_bofa")
+            guard let mfa = json!["mfa"] as? [[String : String]] else { return XCTFail() }
+            XCTAssertEqual(mfa[0]["question"], "You say tomato, I say...?")
+            testExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 100000) { (error) in
+            if let error = error {
+                print("Patch login to Bank Of America did not work. \(error)")
+            }
+        }
+    }
+
+
+    func test_patch_mfa_response() {
+        let testExpectation = expectation(description: "Patch Bank Of America MFA response")
+
+        plaidClient.patchSubmitMFAResponse(response: "tomato", accessToken: "test_bofa") { (response, json, error) in
+            XCTAssertEqual(json!["access_token"] as! String, "test_bofa")
+            testExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 100000) { (error) in
+            if let error = error {
+                print("Patch mfa response to Bank Of America did not work. \(error)")
+            }
+        }
+    }
+
+
+    func test_downloadTransaction() {
+        let testExpectation = expectation(description: "Download transactions for Bank Of America")
+
+        plaidClient.downloadTransactions(accessToken: "test_bofa") { (response, accounts, transactions, error) in
+
+            XCTAssertTrue(accounts.count > 0)
+            XCTAssertTrue(transactions.count > 0)
+
+            testExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 100000) { (error) in
+            if let error = error {
+                print("Downloading transactions for Bank Of America did not work. \(error)")
+            }
+        }
     }
 }
 
