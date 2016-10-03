@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 
 public enum AccountInfoRetrevalError: Error {

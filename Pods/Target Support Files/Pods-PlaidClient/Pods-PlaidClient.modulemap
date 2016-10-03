@@ -1,6 +1,0 @@
-framework module Pods_PlaidClient {
-  umbrella header "Pods-PlaidClient-umbrella.h"
-
-  export *
-  module * { export * }
-}

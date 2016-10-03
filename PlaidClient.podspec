@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "PlaidClient"
-  s.version      = "0.2.4"
+  s.version      = "0.3"
   s.summary      = "A Swift library to interact with Plaid.com."
 
 
@@ -24,6 +24,5 @@ Pod::Spec.new do |s|
 
 
   s.frameworks = 'UIKit'
-  s.dependency 'Alamofire', '~> 4.0'
 
 end
