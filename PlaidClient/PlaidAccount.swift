@@ -6,7 +6,7 @@
 //  Copyright © 2015 Nathan Mann. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public struct PlaidAccount {
     

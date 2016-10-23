@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nate. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 
 public struct PlaidTransaction {

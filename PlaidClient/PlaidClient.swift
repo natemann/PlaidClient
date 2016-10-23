@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nate. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 
 public enum AccountInfoRetrevalError: Error {
@@ -162,7 +162,7 @@ public struct PlaidClient {
             if let code = responseData?["code"] as? Int {
                 switch code {
 
-                case 1200...1209:
+                case 1200...1299:
                     completion(response, [], [], .notConnected(accessToken:accessToken))
 
                 default:
