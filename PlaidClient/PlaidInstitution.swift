@@ -57,14 +57,14 @@ public struct PlaidInstitution {
         //If these attributes are not fullfilled, return nil
         
         guard let credentials = institution["credentials"] as? [String : String],
-            let has_mfa     = institution["has_mfa"] as? Int,
+            let has_mfa     = institution["has_mfa"] as? Bool,
             let name        = institution["name"] as? String,
             let products    = institution["products"] as? [String],
             let type        = institution["type"] as? String else { return nil }
         
         self.source      = source
         self.credentials = credentials
-        self.has_mfa     = has_mfa == 1 ? true : false
+        self.has_mfa     = has_mfa
         self.name        = name
         self.products    = products
         self.type        = type

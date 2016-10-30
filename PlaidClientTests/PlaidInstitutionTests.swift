@@ -20,10 +20,10 @@ class PlaidClientTests: XCTestCase {
 
         plaidClient.plaidInstitutions { (response, institutions, error) in
 
-            guard let institutions = institutions else { return XCTFail("Failed to get Plaid institutions") }
+            XCTAssertNotEqual(institutions?.count, 0, "Failed to get Plaid institutions")
             //Run tests for each institution
-            for plaidInstitution in institutions {
-                print(plaidInstitution.id)
+            for plaidInstitution in institutions! {
+                print("Now testing \(plaidInstitution.name)")
                 //test source is correctly set to Plaid
                 XCTAssertEqual(plaidInstitution.source, PlaidInstitution.Source.plaid, "Source is not correct for institution: \(plaidInstitution)")
 
@@ -32,7 +32,7 @@ class PlaidClientTests: XCTestCase {
                     XCTAssertTrue(plaidInstitution.mfa!.count > 0, "MFA array should have objects. Institution: \(plaidInstitution)")
 
                     //Test all known MFA types
-                    let knownMFATypes = ["code", "list", "questions", "selections", "questions(3)"]
+                    let knownMFATypes = ["code", "list", "questions", "selections", "questions(3)", "questions(5)"]
                     for mfaType in plaidInstitution.mfa! {
                         XCTAssertTrue(knownMFATypes.contains(mfaType), "\(mfaType) is not a known MFA type")
                     }
@@ -67,7 +67,7 @@ class PlaidClientTests: XCTestCase {
 
             //Run tests for each institution
             for plaidInstitution in institutions {
-                print("running test for \(plaidInstitution.name)")
+                print("Now testing \(plaidInstitution.name)")
                 //test source is correctly set to Intuit
 
                 XCTAssertEqual(plaidInstitution.source, PlaidInstitution.Source.intuit, "Source is not correct for institution: \(plaidInstitution)")
