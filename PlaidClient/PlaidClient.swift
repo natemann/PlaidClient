@@ -91,7 +91,7 @@ public struct PlaidClient {
     /// - parameter pin: The user's pin for the institution (if required)
     public func login(toInstitution institution: PlaidInstitution, username: String, password: String, pin: String? = nil, session: URLSession = URLSession.shared, completion: @escaping (_ response: URLResponse?, _ responseData: JSON?, _ error: Error?) -> ()) {
 
-        let url = plaidURL.connect(clientID: clientIDToken, secret: secretToken, institution: institution, username: username, password: password)
+        let url = plaidURL.connect(clientID: clientIDToken, secret: secretToken, institution: institution, username: username, password: password, pin: pin)
 
         session.dataTask(with: url) { (data, response, error) in
             completion(response, self.decode(data: data) as? JSON, error)
